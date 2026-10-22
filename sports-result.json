@@ -3,40 +3,49 @@
   {
    "source": 1,
    "mode": "american",
-   "added": 6,
+   "added": 9,
    "skipped": {
-    "team_unknown": 141,
-    "other_sport": 3
+    "team_unknown": 139,
+    "other_sport": 2
    },
    "albums": 5117,
-   "pending_before": 4967,
-   "pending_after": 4817,
+   "pending_before": 4817,
+   "pending_after": 4667,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 150,
-   "skipped": {},
+   "added": 56,
+   "skipped": {
+    "team_unknown": 94
+   },
    "albums": 2176,
-   "pending_before": 2026,
-   "pending_after": 1876,
+   "pending_before": 1876,
+   "pending_after": 1726,
    "status": "ok"
   }
  ],
- "added": 156,
+ "added": 65,
  "by_league": {
-  "NHL": 6,
-  "Fórmula 1": 150
+  "NFL": 4,
+  "NHL": 5,
+  "Fórmula 1": 50,
+  "GAA": 6
  },
  "by_team": {
-  "Philadelphia Flyers": 6,
-  "Red Bull Racing": 56,
-  "Mercedes": 7,
-  "Otras escuderías": 53,
-  "McLaren": 2,
-  "Ferrari": 28,
-  "Aston Martin": 4
+  "Philadelphia Eagles": 4,
+  "Philadelphia Flyers": 5,
+  "Ferrari": 1,
+  "Otras escuderías": 39,
+  "McLaren": 1,
+  "Mercedes": 4,
+  "Red Bull Racing": 4,
+  "Williams": 1,
+  "Kerry": 2,
+  "Dublin": 1,
+  "Donegal": 1,
+  "Cork": 2
  },
- "remaining": 6693
+ "remaining": 6393
 }
