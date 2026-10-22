@@ -8,33 +8,36 @@
     "other_sport": 80
    },
    "albums": 5117,
-   "pending_before": 3178,
-   "pending_after": 3098,
+   "pending_before": 3098,
+   "pending_after": 3018,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 12,
+   "added": 20,
    "skipped": {
-    "team_unknown": 68
+    "team_unknown": 60
    },
    "albums": 2176,
-   "pending_before": 237,
-   "pending_after": 157,
+   "pending_before": 157,
+   "pending_after": 77,
    "status": "ok"
   }
  ],
- "added": 12,
+ "added": 20,
  "by_league": {
-  "AFL": 12
+  "AFL": 20
  },
  "by_team": {
+  "Richmond": 8,
+  "St Kilda": 2,
+  "Essendon": 2,
+  "Sydney Swans": 1,
+  "Geelong": 1,
   "Carlton": 2,
-  "St Kilda": 4,
-  "Richmond": 2,
-  "Collingwood": 1,
-  "Sydney Swans": 3
+  "Collingwood": 2,
+  "West Coast Eagles": 2
  },
- "remaining": 3255
+ "remaining": 3095
 }
