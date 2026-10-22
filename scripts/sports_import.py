@@ -67,14 +67,56 @@ def match_team(text, league_hint=None):
     if league_hint: hits = [h for h in hits if h[1] == league_hint] or hits
     return (max(hits)[1], max(hits)[2]) if hits else None
 
+# Rugby: (liga, equipo, alias...) — solo nombres nuestros llegan al catálogo.
+RUGBY = T('Selecciones de rugby', [
+    ('Nueva Zelanda', 'new zealand', 'all blacks', '新西兰', '全黑'), ('Sudáfrica', 'south africa', 'springbok', '南非'),
+    ('Australia', 'wallabies', '澳大利亚', '澳洲'), ('Fiyi', 'fiji', '斐济'), ('Escocia', 'scotland', '苏格兰'),
+    ('Irlanda', 'ireland', '爱尔兰'), ('Inglaterra', 'england', '英格兰'), ('Francia', 'france', '法国'), ('Gales', 'wales', '威尔士'),
+    ('Italia', 'italy', '意大利'), ('Argentina', 'pumas', '阿根廷'), ('Japón', 'japan', '日本'), ('Samoa', 'samoa', '萨摩亚'),
+    ('Tonga', 'tonga', '汤加'), ('Georgia', 'georgia', '格鲁吉亚'), ('Uruguay', 'uruguay', '乌拉圭'), ('Portugal', 'portugal', '葡萄牙'),
+    ('Chile', 'chile', '智利'), ('Canadá', 'canada', '加拿大'), ('Estados Unidos', 'usa rugby', '美国')]) + T('NRL', [
+    ('Brisbane Broncos', 'broncos', '野马'), ('Melbourne Storm', 'storm', '墨尔本'), ('Cronulla Sharks', 'sharks', '鲨鱼'),
+    ('New Zealand Warriors', 'warriors', '勇士'), ('Penrith Panthers', 'panthers', '美洲豹', '黑豹'), ('Sydney Roosters', 'roosters', '雄鸡', '公鸡'),
+    ('Wests Tigers', 'tigers', '西老虎', '老虎'), ('South Sydney Rabbitohs', 'rabbitohs', '兔子'), ('Newcastle Knights', 'knights', '骑士'),
+    ('Manly Sea Eagles', 'sea eagles', '海鹰'), ('Parramatta Eels', 'eels', '鳗鱼'), ('Canterbury Bulldogs', 'bulldogs', '斗牛犬', '牛头犬'),
+    ('St George Illawarra Dragons', 'dragons', '巨龙', '圣乔治'), ('North Queensland Cowboys', 'cowboys', '牛仔'),
+    ('Gold Coast Titans', 'titans', '泰坦'), ('Canberra Raiders', 'raiders', '袭击者', '突袭者'), ('Dolphins', 'dolphins', '海豚')]) + T('Super Rugby', [
+    ('Chiefs', 'chiefs', '酋长'), ('Crusaders', 'crusaders', '十字军'), ('Blues', 'blues', '蓝军'), ('Highlanders', 'highlanders', '高地人'),
+    ('Hurricanes', 'hurricanes', '飓风')]) + T('Rugby europeo', [
+    ('Ulster', 'ulster', '阿尔斯特'), ('Leinster', 'leinster', '伦斯特'), ('Munster', 'munster', '芒斯特'), ('Connacht', 'connacht', '康诺特'),
+    ('Montpellier', 'montpellier', '蒙彼利埃'), ('Toulouse', 'toulouse', '图卢兹'), ('La Rochelle', 'la rochelle', '拉罗谢尔'),
+    ('Racing 92', 'racing 92', '竞技92'), ('Saracens', 'saracens', '撒拉逊'), ('Leicester Tigers', 'leicester', '莱斯特')]) + T('AFL', [
+    ('St Kilda', 'st kilda', '圣徒'), ('Essendon', 'essendon', '埃森登'), ('Collingwood', 'collingwood', '科林伍德'),
+    ('Richmond', 'richmond', '里士满'), ('Carlton', 'carlton', '卡尔顿'), ('Hawthorn', 'hawthorn', '霍索恩'),
+    ('Geelong', 'geelong', '吉朗'), ('Sydney Swans', 'swans', '天鹅'), ('West Coast Eagles', 'west coast', '西海岸')]) + T('GAA', [
+    ('Kerry', 'kerry', '克里'), ('Dublin', 'dublin', '都柏林'), ('Cork', 'cork', '软木', '科克'), ('Galway', 'galway', '戈尔韦'),
+    ('Mayo', 'mayo', '梅奥'), ('Tyrone', 'tyrone', '蒂龙'), ('Donegal', 'donegal', '多尼戈尔'), ('Kilkenny', 'kilkenny', '基尔肯尼')])
+RUGBY_LEAGUE_HINT = [('NRL', re.compile(r'nrl', re.I)), ('AFL', re.compile(r'afl', re.I)), ('GAA', re.compile(r'gaa', re.I)),
+    ('Selecciones de rugby', re.compile(r'国家队|national', re.I)), ('Super Rugby', re.compile(r'新西兰系列|super rugby', re.I))]
+SECTION.update({lg: 'rugby' for lg in ('Selecciones de rugby', 'NRL', 'Super Rugby', 'Rugby europeo', 'AFL', 'GAA')})
+LEAGUE_SLUG = {'NHL': 'nhl', 'NFL': 'nfl', 'Fórmula 1': 'formula-1', 'Selecciones de rugby': 'selecciones-de-rugby', 'NRL': 'nrl',
+    'Super Rugby': 'super-rugby', 'Rugby europeo': 'rugby-europeo', 'AFL': 'afl', 'GAA': 'gaa'}
+
+def match_rugby(ctx, raw):
+    hint = next((lg for lg, rx in RUGBY_LEAGUE_HINT if rx.search(ctx)), None)
+    text = (translate(raw) + ' ' + raw).lower()
+    hits = [(len(a), lg, name) for lg, name, aliases in RUGBY for a in aliases
+            if (a.isascii() and re.search(r'(?<![a-z])' + re.escape(a) + r'(?![a-z])', text)) or (not a.isascii() and a in text)]
+    if hint: hits = [h for h in hits if h[1] == hint] or ([] if hint in ('NRL', 'AFL', 'GAA') else hits)
+    return (max(hits)[1], max(hits)[2]) if hits else None
+
 def build_title(raw, team):
     garment = next((g for g in GARMENTS if re.search(g[2], raw, re.I)), GARMENTS[-1])
     version = [v for v, rx in VERSIONS if re.search(rx, raw, re.I)][:2]
     season = re.search(r'(?<!\d)(20[0-3]\d)(?:\s*[/-]\s*(\d{2}))?(?!\d)', raw)
-    parts = [garment[1], team] + version + ([season.group(1) + ('/' + season.group(2) if season.group(2) else '')] if season else [])
+    short = re.search(r'(?<!\d)(2\d)\s*-?\s*(2\d)(?!\d)', raw) if not season else None
+    label = (season.group(1) + ('/' + season.group(2) if season.group(2) else '')) if season else (f'20{short.group(1)}/{short.group(2)}' if short and int(short.group(2)) == int(short.group(1)) + 1 else None)
+    parts = [garment[1], team] + version + ([label] if label else [])
+    if re.search(r'女装|women|ladies', raw, re.I): parts.append('Mujer')
+    if re.search(r'童装|儿童|kids?|youth', raw, re.I): parts.append('(Niño)')
     return ' '.join(parts), garment[0], garment[1]
 
-SAFE = re.compile(r"^[A-Za-zÀ-ÿ0-9 .'/&-]+$")
+SAFE = re.compile(r"^[A-Za-zÀ-ÿ0-9 .'/&()-]+$")
 
 def safe_title(title, team):
     # Solo letras/números de nuestro vocabulario; ningún número largo; debe empezar con nuestra prenda.
@@ -122,21 +164,25 @@ def main():
         hint = 'Fórmula 1' if source['mode'] == 'racing' else None
         try: albums = collect(site, source['mode'])
         except Exception as e: rep['status'] = 'unreadable:' + type(e).__name__; report['sources'].append(rep); continue
-        pending = [a for a in albums if opaque(site.host, 'album', a[0]) not in seen]
+        def entry_key(a):
+            kind = 'rugby' if source['mode'] == 'racing' and not F1_WORD.search(a[2]) else 'album'
+            return opaque(site.host, kind, a[0])
+        pending = [a for a in albums if entry_key(a) not in seen]
         rep['albums'] = len(albums); rep['pending_before'] = len(pending)
         batch = pending[::max(1, len(pending) // 40)][:40] if PILOT else pending[:BATCH]
         def work(entry):
             aid, aurl, ctx = entry
             if source['mode'] == 'american' and OTHER_SPORTS.search(ctx): return entry, None, 'other_sport'
-            if source['mode'] == 'racing' and not F1_WORD.search(ctx): return entry, None, 'other_sport'
+            rugby_mode = source['mode'] == 'racing' and not F1_WORD.search(ctx)
             try:
                 page = site.page(aurl); raw = album_raw(page); text = ctx + ' ' + raw
                 if source['mode'] == 'american' and OTHER_SPORTS.search(raw): return entry, None, 'other_sport'
                 league_hint = hint or next((lg for lg, rx in LEAGUE_WORD.items() if rx.search(text)), None)
-                found = match_team(text, league_hint)
+                found = match_rugby(ctx, raw) if rugby_mode else match_team(text, league_hint)
+                if rugby_mode and not found: return entry, None, 'team_unknown'
                 if not found and source['mode'] == 'racing': found = ('Fórmula 1', 'Otras escuderías')
                 if not found and league_hint == 'NHL' and NHL_ALLSTAR.search(raw): found = ('NHL', 'All-Star NHL')
-                if not found or (source['mode'] == 'american' and found[0] == 'Fórmula 1') or (source['mode'] == 'racing' and found[0] != 'Fórmula 1'):
+                if not found or (source['mode'] == 'american' and found[0] == 'Fórmula 1') or (source['mode'] == 'racing' and not rugby_mode and found[0] != 'Fórmula 1'):
                     if PILOT: PRIVATE.append({'mode': source['mode'], 'ctx': ctx[:80], 'raw': raw[:160]})
                     return entry, None, 'team_unknown'
                 league, team = found
@@ -152,8 +198,8 @@ def main():
             except Exception as e:
                 return entry, None, 'error_' + type(e).__name__
         with ThreadPoolExecutor(max_workers=6) as pool: results = list(pool.map(work, batch))
-        for (aid, _, _), data, status in results:
-            key = opaque(site.host, 'album', aid)
+        for (aid, _, _ctx), data, status in results:
+            key = entry_key((aid, None, _ctx))
             if status != 'ok':
                 rep['skipped'][status] = rep['skipped'].get(status, 0) + 1
                 if not status.startswith('error'): seen.add(key)
@@ -172,9 +218,9 @@ def main():
                 season = re.search(r'20\d\d(?:/\d\d)?', title)
                 items.insert(0, {'id': ident, 'slug': ident, 'title': title, 'brand': 'Otras marcas', 'team': team,
                     'teamSlug': re.sub(r'[^a-z0-9]+', '-', team.lower()).strip('-'), 'league': league,
-                    'leagueSlug': SECTION[league], 'categorySlug': cat, 'category': {'camisetas': 'Camisetas', 'chaquetas': 'Chaquetas', 'buzos': 'Buzos', 'shorts': 'Shorts'}[cat],
+                    'leagueSlug': LEAGUE_SLUG[league], 'categorySlug': cat, 'category': {'camisetas': 'Camisetas', 'chaquetas': 'Chaquetas', 'buzos': 'Buzos', 'shorts': 'Shorts'}[cat],
                     'sizes': ['S', 'M', 'L', 'XL', '2XL'], 'season': season.group(0) if season else None, 'version': 'fan',
-                    'audiences': ['hombre'], 'colors': [], 'price': None, 'status': 'active', 'cover': f'{ident}.webp',
+                    'audiences': ['mujer'] if title.endswith('Mujer') else (['nino'] if title.endswith('(Niño)') else ['hombre']), 'colors': [], 'price': None, 'status': 'active', 'cover': f'{ident}.webp',
                     'sectionSlug': SECTION[league], 'gallery': keys})
                 size_now += (Path('images') / f'{ident}.webp').stat().st_size
                 seen.add(key)
