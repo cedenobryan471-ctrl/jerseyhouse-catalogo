@@ -3,39 +3,45 @@
   {
    "source": 1,
    "mode": "american",
-   "added": 1,
+   "added": 7,
    "skipped": {
-    "team_unknown": 15,
-    "other_sport": 24
+    "team_unknown": 141,
+    "other_sport": 2
    },
    "albums": 5117,
    "pending_before": 5117,
-   "pending_after": 5077,
+   "pending_after": 4967,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 4,
+   "added": 147,
    "skipped": {
-    "team_unknown": 36
+    "photos_rejected": 3
    },
    "albums": 2176,
    "pending_before": 2176,
-   "pending_after": 2136,
+   "pending_after": 2026,
    "status": "ok"
   }
  ],
- "added": 5,
+ "added": 154,
  "by_league": {
-  "NFL": 1,
-  "Fórmula 1": 4
+  "NFL": 7,
+  "Fórmula 1": 147
  },
  "by_team": {
-  "New England Patriots": 1,
-  "Ferrari": 2,
-  "Red Bull Racing": 1,
-  "Mercedes": 1
+  "Tampa Bay Buccaneers": 3,
+  "Arizona Cardinals": 2,
+  "Philadelphia Eagles": 2,
+  "Ferrari": 33,
+  "Mercedes": 48,
+  "Otras escuderías": 20,
+  "Red Bull Racing": 22,
+  "Audi": 2,
+  "Cadillac": 3,
+  "McLaren": 19
  },
- "remaining": 7213
+ "remaining": 6993
 }
