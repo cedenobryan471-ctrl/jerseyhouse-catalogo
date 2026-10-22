@@ -16,6 +16,8 @@ from footwear_rules import translate
 
 OTHER_SPORTS = re.compile(r'\bmlb\b|baseball|棒球|\bnba\b|篮球|basketball|soccer|足球', re.I)
 PRIVATE = []
+F1_WORD = re.compile(r'\bf1\b|方程式|formula', re.I)
+NHL_ALLSTAR = re.compile(r'全明星|all[- ]?star', re.I)
 PILOT = os.environ.get('SPORTS_PILOT') == 'true'
 BATCH = int(os.environ.get('SPORTS_BATCH', '40'))
 
@@ -126,11 +128,14 @@ def main():
         def work(entry):
             aid, aurl, ctx = entry
             if source['mode'] == 'american' and OTHER_SPORTS.search(ctx): return entry, None, 'other_sport'
+            if source['mode'] == 'racing' and not F1_WORD.search(ctx): return entry, None, 'other_sport'
             try:
                 page = site.page(aurl); raw = album_raw(page); text = ctx + ' ' + raw
                 if source['mode'] == 'american' and OTHER_SPORTS.search(raw): return entry, None, 'other_sport'
                 league_hint = hint or next((lg for lg, rx in LEAGUE_WORD.items() if rx.search(text)), None)
                 found = match_team(text, league_hint)
+                if not found and source['mode'] == 'racing': found = ('Fórmula 1', 'Otras escuderías')
+                if not found and league_hint == 'NHL' and NHL_ALLSTAR.search(raw): found = ('NHL', 'All-Star NHL')
                 if not found or (source['mode'] == 'american' and found[0] == 'Fórmula 1') or (source['mode'] == 'racing' and found[0] != 'Fórmula 1'):
                     if PILOT: PRIVATE.append({'mode': source['mode'], 'ctx': ctx[:80], 'raw': raw[:160]})
                     return entry, None, 'team_unknown'
