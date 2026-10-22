@@ -94,6 +94,7 @@ jobs:
           cp catalog.json tienda.json estado.json resultado.json revisar.json gallery-recovery-summary.json _site/
           if [ -f portadas.json ]; then cp portadas.json _site/; fi
           if [ -f destacados.json ]; then cp destacados.json _site/; fi
+          if [ -f revisar-portadas.json ]; then cp revisar-portadas.json _site/; fi
           cp -r images _site/
           touch _site/.nojekyll
         if: '!inputs.pilot'
