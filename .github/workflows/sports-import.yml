@@ -52,7 +52,7 @@ jobs:
           CATALOG_CONFIG: ${{ secrets.CATALOG_CONFIG }}
           SOURCES_CONFIG: ${{ secrets.SOURCES_CONFIG }}
           SPORTS_PILOT: ${{ steps.mode.outputs.pilot }}
-          SPORTS_BATCH: '40'
+          SPORTS_BATCH: '150'
         run: python scripts/sports_import.py > /dev/null && python scripts/normalize_all.py > /dev/null
       - name: Guardar
         run: |
