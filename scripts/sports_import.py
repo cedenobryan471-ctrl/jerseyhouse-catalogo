@@ -14,7 +14,7 @@ from footwear_import import Site, links, max_page, with_page, download, choose, 
 from photo_candidates import album_originals, seller_cover
 from footwear_rules import translate
 
-OTHER_SPORTS = re.compile(r'\bmlb\b|baseball|棒球|\bnba\b|篮球|basketball|soccer|足球', re.I)
+OTHER_SPORTS = re.compile(r'\bmlb\b|baseball|棒球|\bnba\b|篮球|basketball|soccer|足球|ncaa|college|大学|university|密绣|jordan|乔丹|pirates|cardinals\s+\d|mitchell', re.I)
 PRIVATE = []
 F1_WORD = re.compile(r'\bf1\b|方程式|formula', re.I)
 NHL_ALLSTAR = re.compile(r'全明星|all[- ]?star', re.I)
@@ -30,27 +30,27 @@ TEAMS = T('NHL', [
     ('Colorado Avalanche', 'avalanche', '雪崩'), ('Columbus Blue Jackets', 'blue jackets', '蓝衣'), ('Dallas Stars', 'dallas stars', '达拉斯星'),
     ('Detroit Red Wings', 'red wings', '红翼'), ('Edmonton Oilers', 'oilers', '油人'), ('Florida Panthers', 'florida panthers', '佛罗里达美洲豹'),
     ('Los Angeles Kings', 'la kings', 'los angeles kings', '洛杉矶国王'), ('Minnesota Wild', 'minnesota wild', '狂野'), ('Montreal Canadiens', 'canadiens', '加拿大人'),
-    ('Nashville Predators', 'predators', '掠夺者'), ('New Jersey Devils', 'devils', '魔鬼'), ('New York Islanders', 'islanders', '岛人'),
-    ('New York Rangers', 'new york rangers', 'ny rangers', '纽约游骑兵'), ('Ottawa Senators', 'senators', '参议员'), ('Philadelphia Flyers', 'flyers', '飞人'),
+    ('Nashville Predators', 'predators', '掠夺者'), ('New Jersey Devils', 'new jersey devils', '新泽西魔鬼'), ('New York Islanders', 'islanders', '岛人'),
+    ('New York Rangers', 'new york rangers', 'ny rangers', '纽约游骑兵'), ('Ottawa Senators', 'senators', '参议员'), ('Philadelphia Flyers', 'flyers', '费城飞人'),
     ('Pittsburgh Penguins', 'penguins', '企鹅'), ('San Jose Sharks', 'sharks', '鲨鱼'), ('Seattle Kraken', 'kraken', '海怪'),
     ('St. Louis Blues', 'st louis blues', 'st. louis blues', '蓝调'), ('Tampa Bay Lightning', 'tampa bay lightning', '坦帕湾闪电'),
     ('Toronto Maple Leafs', 'maple leafs', '枫叶'), ('Utah Mammoth', 'utah', '犹他'), ('Vancouver Canucks', 'canucks', '加人'),
     ('Vegas Golden Knights', 'golden knights', '金骑士'), ('Washington Capitals', 'capitals', '首都人'), ('Winnipeg Jets', 'winnipeg', '温尼伯')]) + T('NFL', [
     ('Arizona Cardinals', 'arizona cardinals', '红雀'), ('Atlanta Falcons', 'falcons', '猎鹰'), ('Baltimore Ravens', 'ravens', '乌鸦'),
     ('Buffalo Bills', 'buffalo bills', '布法罗比尔'), ('Carolina Panthers', 'carolina panthers', '黑豹'), ('Chicago Bears', 'chicago bears', '芝加哥熊'),
-    ('Cincinnati Bengals', 'bengals', '猛虎'), ('Cleveland Browns', 'cleveland browns', '克利夫兰布朗'), ('Dallas Cowboys', 'cowboys', '牛仔'),
-    ('Denver Broncos', 'broncos', '野马'), ('Detroit Lions', 'detroit lions', '雄狮'), ('Green Bay Packers', 'packers', '包装工'),
+    ('Cincinnati Bengals', 'bengals', '猛虎'), ('Cleveland Browns', 'cleveland browns', '克利夫兰布朗'), ('Dallas Cowboys', 'dallas cowboys', '达拉斯牛仔'),
+    ('Denver Broncos', 'denver broncos', '丹佛野马'), ('Detroit Lions', 'detroit lions', '雄狮'), ('Green Bay Packers', 'packers', '包装工'),
     ('Houston Texans', 'texans', '德州人'), ('Indianapolis Colts', 'colts', '小马'), ('Jacksonville Jaguars', 'jaguars', '美洲虎'),
-    ('Kansas City Chiefs', 'kansas city chiefs', 'kc chiefs', '堪萨斯城酋长'), ('Las Vegas Raiders', 'raiders', '突袭者'), ('Los Angeles Chargers', 'chargers', '闪电侠', '洛杉矶闪电'),
+    ('Kansas City Chiefs', 'kansas city chiefs', 'kc chiefs', '堪萨斯城酋长'), ('Las Vegas Raiders', 'las vegas raiders', 'oakland raiders', '拉斯维加斯突袭者', '奥克兰突袭者'), ('Los Angeles Chargers', 'chargers', '闪电侠', '洛杉矶闪电'),
     ('Los Angeles Rams', 'los angeles rams', 'la rams', '洛杉矶公羊'), ('Miami Dolphins', 'dolphins', '海豚'), ('Minnesota Vikings', 'vikings', '维京人'),
     ('New England Patriots', 'patriots', '爱国者'), ('New Orleans Saints', 'saints', '圣徒'), ('New York Giants', 'new york giants', 'ny giants', '纽约巨人'),
     ('New York Jets', 'new york jets', 'ny jets', '纽约喷气机'), ('Philadelphia Eagles', 'eagles', '老鹰'), ('Pittsburgh Steelers', 'steelers', '钢人'),
-    ('San Francisco 49ers', '49ers', '49人'), ('Seattle Seahawks', 'seahawks', '海鹰'), ('Tampa Bay Buccaneers', 'buccaneers', '海盗'),
+    ('San Francisco 49ers', '49ers', '49人'), ('Seattle Seahawks', 'seahawks', '海鹰'), ('Tampa Bay Buccaneers', 'buccaneers', '坦帕湾海盗'),
     ('Tennessee Titans', 'titans', '泰坦'), ('Washington Commanders', 'commanders', '指挥官')]) + T('Fórmula 1', [
-    ('Ferrari', 'ferrari', '法拉利'), ('Mercedes', 'mercedes', '梅赛德斯', '奔驰'), ('McLaren', 'mclaren', '迈凯伦'),
-    ('Red Bull Racing', 'red bull', '红牛'), ('Aston Martin', 'aston martin', '阿斯顿马丁'), ('Alpine', 'alpine', '阿尔派'),
-    ('Williams', 'williams', '威廉姆斯'), ('Haas', 'haas', '哈斯'), ('Audi', 'audi', '奥迪'), ('Cadillac', 'cadillac', '凯迪拉克'),
-    ('Racing Bulls', 'racing bulls', 'visa cash app')])
+    ('Ferrari', 'ferrari', '法拉利', '勒克莱尔', '汉密尔顿'), ('Mercedes', 'mercedes', '梅赛德斯', '奔驰'), ('McLaren', 'mclaren', '迈凯伦'),
+    ('Red Bull Racing', 'red bull', '红牛'), ('Aston Martin', 'aston martin', '阿斯顿', '马丁', '阿隆索', 'aramco'), ('Alpine', 'alpine', '阿尔派', '阿尔平'),
+    ('Williams', 'williams', '威廉'), ('Haas', 'haas', '哈斯'), ('Audi', 'audi', '奥迪'), ('Cadillac', 'cadillac', '凯迪拉克'),
+    ('Racing Bulls', 'racing bulls', 'visa cash app', '小红牛'), ('Sauber', 'sauber', 'alfa romeo', '索伯', '阿尔法'), ('Renault', 'renault', '雷诺')])
 SECTION = {'NHL': 'nhl', 'NFL': 'nfl', 'Fórmula 1': 'formula-1'}
 LEAGUE_WORD = {'NHL': re.compile(r'nhl|冰球|hockey', re.I), 'NFL': re.compile(r'nfl|橄榄球|football', re.I)}
 
