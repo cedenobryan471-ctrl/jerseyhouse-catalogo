@@ -194,7 +194,11 @@ def main():
                 if not images: return entry, None, 'no_photos'
                 selected = choose(images, 0 if cover else None)
                 if not selected: return entry, None, 'photos_rejected'
-                return entry, (league, team, title, cat, label, images, selected), 'ok'
+                # Guardar en memoria solo las fotos elegidas y achicadas (evita que la tanda se quede sin memoria).
+                kept = []
+                for i in selected:
+                    im = images[i].copy(); im.thumbnail((600, 600)); kept.append(im)
+                return entry, (league, team, title, cat, label, kept, list(range(len(kept)))), 'ok'
             except Exception as e:
                 return entry, None, 'error_' + type(e).__name__
         with ThreadPoolExecutor(max_workers=6) as pool: results = list(pool.map(work, batch))
