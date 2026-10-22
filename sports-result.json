@@ -3,13 +3,14 @@
   {
    "source": 1,
    "mode": "american",
-   "added": 0,
+   "added": 34,
    "skipped": {
-    "other_sport": 80
+    "other_sport": 23,
+    "team_unknown": 23
    },
    "albums": 5117,
-   "pending_before": 2218,
-   "pending_after": 2138,
+   "pending_before": 2138,
+   "pending_after": 2058,
    "status": "ok"
   },
   {
@@ -23,8 +24,36 @@
    "status": "ok"
   }
  ],
- "added": 0,
- "by_league": {},
- "by_team": {},
- "remaining": 2138
+ "added": 34,
+ "by_league": {
+  "NHL": 34
+ },
+ "by_team": {
+  "Utah Mammoth": 1,
+  "Boston Bruins": 2,
+  "Detroit Red Wings": 1,
+  "Buffalo Sabres": 2,
+  "Colorado Avalanche": 1,
+  "St. Louis Blues": 2,
+  "Vancouver Canucks": 2,
+  "Ottawa Senators": 2,
+  "Toronto Maple Leafs": 2,
+  "Nashville Predators": 2,
+  "Pittsburgh Penguins": 1,
+  "Chicago Blackhawks": 2,
+  "Carolina Hurricanes": 1,
+  "Calgary Flames": 2,
+  "San Jose Sharks": 1,
+  "Los Angeles Kings": 1,
+  "New York Islanders": 1,
+  "Winnipeg Jets": 1,
+  "Washington Capitals": 1,
+  "New Jersey Devils": 1,
+  "All-Star NHL": 1,
+  "Philadelphia Flyers": 1,
+  "Tampa Bay Lightning": 1,
+  "Montreal Canadiens": 1,
+  "Anaheim Ducks": 1
+ },
+ "remaining": 2058
 }
