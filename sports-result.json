@@ -5,11 +5,11 @@
    "mode": "american",
    "added": 0,
    "skipped": {
-    "other_sport": 80
+    "other_sport": 58
    },
    "albums": 5117,
-   "pending_before": 138,
-   "pending_after": 58,
+   "pending_before": 58,
+   "pending_after": 0,
    "status": "ok"
   },
   {
@@ -26,5 +26,5 @@
  "added": 0,
  "by_league": {},
  "by_team": {},
- "remaining": 58
+ "remaining": 0
 }
