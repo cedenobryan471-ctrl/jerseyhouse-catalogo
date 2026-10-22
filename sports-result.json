@@ -8,8 +8,8 @@
     "other_sport": 80
    },
    "albums": 5117,
-   "pending_before": 2698,
-   "pending_after": 2618,
+   "pending_before": 2618,
+   "pending_after": 2538,
    "status": "ok"
   },
   {
@@ -26,5 +26,5 @@
  "added": 0,
  "by_league": {},
  "by_team": {},
- "remaining": 2618
+ "remaining": 2538
 }
