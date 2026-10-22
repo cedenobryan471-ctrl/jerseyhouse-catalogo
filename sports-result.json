@@ -8,52 +8,23 @@
     "other_sport": 80
    },
    "albums": 5117,
-   "pending_before": 3018,
-   "pending_after": 2938,
+   "pending_before": 2938,
+   "pending_after": 2858,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 62,
-   "skipped": {
-    "team_unknown": 15
-   },
+   "added": 0,
+   "skipped": {},
    "albums": 2176,
-   "pending_before": 77,
+   "pending_before": 0,
    "pending_after": 0,
    "status": "ok"
   }
  ],
- "added": 62,
- "by_league": {
-  "AFL": 1,
-  "Selecciones de rugby": 39,
-  "NRL": 19,
-  "Super Rugby": 3
- },
- "by_team": {
-  "Collingwood": 1,
-  "Sudáfrica": 25,
-  "Irlanda": 10,
-  "New Zealand Warriors": 2,
-  "Brisbane Broncos": 3,
-  "Hurricanes": 1,
-  "Wests Tigers": 2,
-  "Newcastle Knights": 2,
-  "Sydney Roosters": 1,
-  "Crusaders": 1,
-  "Cronulla Sharks": 1,
-  "Canterbury Bulldogs": 1,
-  "Nueva Zelanda": 3,
-  "Highlanders": 1,
-  "Australia": 1,
-  "Manly Sea Eagles": 2,
-  "South Sydney Rabbitohs": 1,
-  "North Queensland Cowboys": 1,
-  "St George Illawarra Dragons": 1,
-  "Melbourne Storm": 1,
-  "Penrith Panthers": 1
- },
- "remaining": 2938
+ "added": 0,
+ "by_league": {},
+ "by_team": {},
+ "remaining": 2858
 }
