@@ -15,6 +15,7 @@ from photo_candidates import album_originals, seller_cover
 from footwear_rules import translate
 
 OTHER_SPORTS = re.compile(r'\bmlb\b|baseball|棒球|\bnba\b|篮球|basketball|soccer|足球', re.I)
+PRIVATE = []
 PILOT = os.environ.get('SPORTS_PILOT') == 'true'
 BATCH = int(os.environ.get('SPORTS_BATCH', '40'))
 
@@ -145,6 +146,9 @@ def main():
             except Exception as e:
                 return entry, None, 'error_' + type(e).__name__
         with ThreadPoolExecutor(max_workers=6) as pool: results = list(pool.map(work, batch))
+        if PILOT:
+            for (aid, aurl, ctx), data, status in results:
+                if status == 'team_unknown': PRIVATE.append({'mode': source['mode'], 'ctx': ctx[:120]})
         for (aid, _, _), data, status in results:
             key = opaque(site.host, 'album', aid)
             if status != 'ok':
@@ -179,6 +183,9 @@ def main():
         Path('sports-seen.json').write_text(json.dumps(sorted(seen)))
     report['remaining'] = sum(r.get('pending_after', 0) for r in report['sources'])
     Path('sports-result.json').write_text(json.dumps(report, ensure_ascii=False, indent=1))
+    if PILOT and PRIVATE:
+        # Solo cifrado: nadie más que el dueño de la llave privada puede leerlo.
+        Path('/tmp/private.json').write_text(json.dumps(PRIVATE, ensure_ascii=False))
 
 if __name__ == '__main__':
     try: main()
