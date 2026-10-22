@@ -3,14 +3,13 @@
   {
    "source": 1,
    "mode": "american",
-   "added": 4,
+   "added": 0,
    "skipped": {
-    "team_unknown": 48,
-    "other_sport": 28
+    "other_sport": 80
    },
    "albums": 5117,
-   "pending_before": 2058,
-   "pending_after": 1978,
+   "pending_before": 1978,
+   "pending_after": 1898,
    "status": "ok"
   },
   {
@@ -24,15 +23,8 @@
    "status": "ok"
   }
  ],
- "added": 4,
- "by_league": {
-  "NHL": 4
- },
- "by_team": {
-  "New York Rangers": 1,
-  "New York Islanders": 1,
-  "Detroit Red Wings": 1,
-  "Pittsburgh Penguins": 1
- },
- "remaining": 1978
+ "added": 0,
+ "by_league": {},
+ "by_team": {},
+ "remaining": 1898
 }
