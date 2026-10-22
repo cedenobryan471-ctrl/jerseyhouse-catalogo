@@ -5,36 +5,37 @@
    "mode": "american",
    "added": 1,
    "skipped": {
-    "team_unknown": 7
+    "team_unknown": 15,
+    "other_sport": 24
    },
    "albums": 5117,
    "pending_before": 5117,
-   "pending_after": 5109,
+   "pending_after": 5077,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 7,
+   "added": 4,
    "skipped": {
-    "team_unknown": 1
+    "team_unknown": 36
    },
    "albums": 2176,
    "pending_before": 2176,
-   "pending_after": 2168,
+   "pending_after": 2136,
    "status": "ok"
   }
  ],
- "added": 8,
+ "added": 5,
  "by_league": {
   "NFL": 1,
-  "Fórmula 1": 7
+  "Fórmula 1": 4
  },
  "by_team": {
-  "New York Giants": 1,
-  "Ferrari": 3,
-  "Mercedes": 3,
-  "Red Bull Racing": 1
+  "New England Patriots": 1,
+  "Ferrari": 2,
+  "Red Bull Racing": 1,
+  "Mercedes": 1
  },
- "remaining": 7277
+ "remaining": 7213
 }
