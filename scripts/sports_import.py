@@ -132,6 +132,7 @@ def main():
                 league_hint = hint or next((lg for lg, rx in LEAGUE_WORD.items() if rx.search(text)), None)
                 found = match_team(text, league_hint)
                 if not found or (source['mode'] == 'american' and found[0] == 'Fórmula 1') or (source['mode'] == 'racing' and found[0] != 'Fórmula 1'):
+                    if PILOT: PRIVATE.append({'mode': source['mode'], 'ctx': ctx[:80], 'raw': raw[:160]})
                     return entry, None, 'team_unknown'
                 league, team = found
                 title, cat, label = build_title(text, team)
@@ -146,9 +147,6 @@ def main():
             except Exception as e:
                 return entry, None, 'error_' + type(e).__name__
         with ThreadPoolExecutor(max_workers=6) as pool: results = list(pool.map(work, batch))
-        if PILOT:
-            for (aid, aurl, ctx), data, status in results:
-                if status == 'team_unknown': PRIVATE.append({'mode': source['mode'], 'ctx': ctx[:120]})
         for (aid, _, _), data, status in results:
             key = opaque(site.host, 'album', aid)
             if status != 'ok':
