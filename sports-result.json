@@ -3,45 +3,73 @@
   {
    "source": 1,
    "mode": "american",
-   "added": 3,
+   "added": 16,
    "skipped": {
-    "team_unknown": 143,
-    "error_HTTPError": 1,
-    "other_sport": 3
+    "team_unknown": 129,
+    "other_sport": 5
    },
    "albums": 5117,
-   "pending_before": 4667,
-   "pending_after": 4517,
+   "pending_before": 4518,
+   "pending_after": 4368,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 26,
+   "added": 88,
    "skipped": {
-    "team_unknown": 124
+    "team_unknown": 60,
+    "no_photos": 1,
+    "error_HTTPError": 1
    },
    "albums": 2176,
-   "pending_before": 1726,
-   "pending_after": 1576,
+   "pending_before": 1576,
+   "pending_after": 1426,
    "status": "ok"
   }
  ],
- "added": 29,
+ "added": 104,
  "by_league": {
-  "NHL": 1,
-  "NFL": 2,
-  "GAA": 26
+  "NHL": 16,
+  "GAA": 1,
+  "Selecciones de rugby": 76,
+  "Super Rugby": 9,
+  "Rugby europeo": 2
  },
  "by_team": {
+  "Washington Capitals": 1,
+  "Carolina Hurricanes": 1,
+  "Buffalo Sabres": 1,
+  "Calgary Flames": 1,
+  "Colorado Avalanche": 1,
+  "Detroit Red Wings": 1,
+  "Minnesota Wild": 1,
+  "Ottawa Senators": 1,
+  "Boston Bruins": 1,
+  "Nashville Predators": 1,
+  "Chicago Blackhawks": 1,
+  "Columbus Blue Jackets": 1,
+  "Pittsburgh Penguins": 1,
+  "Vancouver Canucks": 1,
   "Philadelphia Flyers": 1,
-  "Philadelphia Eagles": 2,
-  "Cork": 5,
-  "Donegal": 2,
-  "Kerry": 14,
-  "Dublin": 3,
-  "Tyrone": 1,
-  "Kilkenny": 1
+  "Toronto Maple Leafs": 1,
+  "Cork": 1,
+  "Australia": 14,
+  "Gales": 9,
+  "Sudáfrica": 15,
+  "Samoa": 3,
+  "Nueva Zelanda": 6,
+  "Tonga": 2,
+  "Inglaterra": 6,
+  "Fiyi": 2,
+  "Irlanda": 10,
+  "Escocia": 6,
+  "Francia": 3,
+  "Crusaders": 3,
+  "Highlanders": 2,
+  "Hurricanes": 2,
+  "Chiefs": 2,
+  "Ulster": 2
  },
- "remaining": 6093
+ "remaining": 5794
 }
