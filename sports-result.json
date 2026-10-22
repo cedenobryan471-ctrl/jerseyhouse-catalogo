@@ -8,36 +8,52 @@
     "other_sport": 80
    },
    "albums": 5117,
-   "pending_before": 3098,
-   "pending_after": 3018,
+   "pending_before": 3018,
+   "pending_after": 2938,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 20,
+   "added": 62,
    "skipped": {
-    "team_unknown": 60
+    "team_unknown": 15
    },
    "albums": 2176,
-   "pending_before": 157,
-   "pending_after": 77,
+   "pending_before": 77,
+   "pending_after": 0,
    "status": "ok"
   }
  ],
- "added": 20,
+ "added": 62,
  "by_league": {
-  "AFL": 20
+  "AFL": 1,
+  "Selecciones de rugby": 39,
+  "NRL": 19,
+  "Super Rugby": 3
  },
  "by_team": {
-  "Richmond": 8,
-  "St Kilda": 2,
-  "Essendon": 2,
-  "Sydney Swans": 1,
-  "Geelong": 1,
-  "Carlton": 2,
-  "Collingwood": 2,
-  "West Coast Eagles": 2
+  "Collingwood": 1,
+  "Sudáfrica": 25,
+  "Irlanda": 10,
+  "New Zealand Warriors": 2,
+  "Brisbane Broncos": 3,
+  "Hurricanes": 1,
+  "Wests Tigers": 2,
+  "Newcastle Knights": 2,
+  "Sydney Roosters": 1,
+  "Crusaders": 1,
+  "Cronulla Sharks": 1,
+  "Canterbury Bulldogs": 1,
+  "Nueva Zelanda": 3,
+  "Highlanders": 1,
+  "Australia": 1,
+  "Manly Sea Eagles": 2,
+  "South Sydney Rabbitohs": 1,
+  "North Queensland Cowboys": 1,
+  "St George Illawarra Dragons": 1,
+  "Melbourne Storm": 1,
+  "Penrith Panthers": 1
  },
- "remaining": 3095
+ "remaining": 2938
 }
