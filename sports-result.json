@@ -5,50 +5,36 @@
    "mode": "american",
    "added": 0,
    "skipped": {
-    "team_unknown": 73,
-    "other_sport": 7
+    "other_sport": 80
    },
    "albums": 5117,
-   "pending_before": 3258,
-   "pending_after": 3178,
+   "pending_before": 3178,
+   "pending_after": 3098,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 50,
+   "added": 12,
    "skipped": {
-    "team_unknown": 30
+    "team_unknown": 68
    },
    "albums": 2176,
-   "pending_before": 317,
-   "pending_after": 237,
+   "pending_before": 237,
+   "pending_after": 157,
    "status": "ok"
   }
  ],
- "added": 50,
+ "added": 12,
  "by_league": {
-  "NRL": 44,
-  "AFL": 6
+  "AFL": 12
  },
  "by_team": {
-  "Cronulla Sharks": 4,
-  "New Zealand Warriors": 1,
-  "Parramatta Eels": 1,
-  "North Queensland Cowboys": 5,
-  "Sydney Roosters": 6,
-  "South Sydney Rabbitohs": 5,
-  "Melbourne Storm": 5,
-  "Penrith Panthers": 1,
-  "Brisbane Broncos": 3,
-  "Wests Tigers": 3,
-  "St George Illawarra Dragons": 3,
-  "Manly Sea Eagles": 6,
-  "Newcastle Knights": 1,
-  "St Kilda": 1,
-  "Carlton": 3,
-  "Sydney Swans": 1,
-  "Collingwood": 1
+  "Carlton": 2,
+  "St Kilda": 4,
+  "Richmond": 2,
+  "Collingwood": 1,
+  "Sydney Swans": 3
  },
- "remaining": 3415
+ "remaining": 3255
 }
