@@ -3,47 +3,68 @@
   {
    "source": 1,
    "mode": "american",
-   "added": 2,
+   "added": 26,
    "skipped": {
-    "team_unknown": 67,
-    "other_sport": 11
+    "team_unknown": 52,
+    "other_sport": 2
    },
    "albums": 5117,
-   "pending_before": 4058,
-   "pending_after": 3978,
+   "pending_before": 3978,
+   "pending_after": 3898,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 62,
+   "added": 58,
    "skipped": {
-    "team_unknown": 17,
-    "photos_rejected": 1
+    "team_unknown": 22
    },
    "albums": 2176,
-   "pending_before": 1117,
-   "pending_after": 1037,
+   "pending_before": 1037,
+   "pending_after": 957,
    "status": "ok"
   }
  ],
- "added": 64,
+ "added": 84,
  "by_league": {
-  "NFL": 1,
-  "NHL": 1,
-  "Super Rugby": 27,
-  "Selecciones de rugby": 35
+  "NFL": 26,
+  "Selecciones de rugby": 27,
+  "NRL": 30,
+  "Rugby europeo": 1
  },
  "by_team": {
-  "Arizona Cardinals": 1,
-  "Detroit Red Wings": 1,
-  "Highlanders": 7,
-  "Nueva Zelanda": 21,
-  "Hurricanes": 6,
-  "Crusaders": 7,
-  "Chiefs": 5,
-  "Blues": 2,
-  "Fiyi": 14
+  "San Francisco 49ers": 5,
+  "Miami Dolphins": 6,
+  "Detroit Lions": 2,
+  "Seattle Seahawks": 2,
+  "Philadelphia Eagles": 3,
+  "New England Patriots": 2,
+  "New Orleans Saints": 1,
+  "Pittsburgh Steelers": 2,
+  "Minnesota Vikings": 1,
+  "Green Bay Packers": 1,
+  "Baltimore Ravens": 1,
+  "Fiyi": 8,
+  "Francia": 16,
+  "Gales": 1,
+  "Escocia": 1,
+  "Penrith Panthers": 4,
+  "Irlanda": 1,
+  "Parramatta Eels": 2,
+  "Gold Coast Titans": 2,
+  "Ulster": 1,
+  "North Queensland Cowboys": 2,
+  "Wests Tigers": 2,
+  "St George Illawarra Dragons": 2,
+  "New Zealand Warriors": 2,
+  "Newcastle Knights": 3,
+  "Dolphins": 1,
+  "Sydney Roosters": 2,
+  "Cronulla Sharks": 2,
+  "South Sydney Rabbitohs": 2,
+  "Manly Sea Eagles": 2,
+  "Brisbane Broncos": 2
  },
- "remaining": 5015
+ "remaining": 4855
 }
