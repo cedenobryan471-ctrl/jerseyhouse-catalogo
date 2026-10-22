@@ -3,63 +3,47 @@
   {
    "source": 1,
    "mode": "american",
-   "added": 49,
+   "added": 2,
    "skipped": {
-    "team_unknown": 31
+    "team_unknown": 67,
+    "other_sport": 11
    },
    "albums": 5117,
-   "pending_before": 4138,
-   "pending_after": 4058,
+   "pending_before": 4058,
+   "pending_after": 3978,
    "status": "ok"
   },
   {
    "source": 2,
    "mode": "racing",
-   "added": 65,
+   "added": 62,
    "skipped": {
-    "team_unknown": 15
+    "team_unknown": 17,
+    "photos_rejected": 1
    },
    "albums": 2176,
-   "pending_before": 1197,
-   "pending_after": 1117,
+   "pending_before": 1117,
+   "pending_after": 1037,
    "status": "ok"
   }
  ],
- "added": 114,
+ "added": 64,
  "by_league": {
-  "NFL": 49,
-  "Selecciones de rugby": 36,
-  "Super Rugby": 29
+  "NFL": 1,
+  "NHL": 1,
+  "Super Rugby": 27,
+  "Selecciones de rugby": 35
  },
  "by_team": {
-  "Jacksonville Jaguars": 3,
-  "Green Bay Packers": 3,
-  "Minnesota Vikings": 3,
-  "Cincinnati Bengals": 3,
-  "Philadelphia Eagles": 3,
-  "Miami Dolphins": 3,
-  "New Orleans Saints": 3,
-  "Baltimore Ravens": 3,
-  "Detroit Lions": 3,
-  "San Francisco 49ers": 2,
-  "Seattle Seahawks": 2,
-  "Houston Texans": 2,
-  "Pittsburgh Steelers": 2,
-  "Indianapolis Colts": 2,
   "Arizona Cardinals": 1,
-  "Tennessee Titans": 2,
-  "Carolina Panthers": 2,
-  "Washington Commanders": 2,
-  "New England Patriots": 2,
-  "Tampa Bay Buccaneers": 1,
-  "Los Angeles Chargers": 1,
-  "Atlanta Falcons": 1,
-  "Irlanda": 1,
-  "Nueva Zelanda": 35,
-  "Hurricanes": 5,
+  "Detroit Red Wings": 1,
   "Highlanders": 7,
-  "Chiefs": 10,
-  "Crusaders": 7
+  "Nueva Zelanda": 21,
+  "Hurricanes": 6,
+  "Crusaders": 7,
+  "Chiefs": 5,
+  "Blues": 2,
+  "Fiyi": 14
  },
- "remaining": 5175
+ "remaining": 5015
 }
