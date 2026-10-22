@@ -1,0 +1,31 @@
+name: Revisar texto en portadas
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/scan_text_strict.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  scan:
+    if: github.repository == 'cedenobryan471-ctrl/jerseyhouse-catalogo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update -q && sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
+      - run: pip install pillow
+      - env:
+          CATALOG_CONFIG: ${{ secrets.CATALOG_CONFIG }}
+        run: python scripts/scan_text_strict.py > /dev/null
+      - run: |
+          git config user.name catalog-bot
+          git config user.email catalog-bot@users.noreply.github.com
+          git add portadas-con-texto-estricto.json
+          git diff --cached --quiet || (git commit -m 'Portadas con texto' && git pull --rebase -q && git push)

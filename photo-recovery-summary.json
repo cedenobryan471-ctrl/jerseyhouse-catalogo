@@ -1,0 +1,20 @@
+{
+  "total": 12438,
+  "processed": 12438,
+  "remaining": 0,
+  "recovered": 82,
+  "rejected": 4345,
+  "errors": 22,
+  "missing": 207,
+  "covers_changed": 0,
+  "visible": 7862,
+  "catalog_bytes": 414757403,
+  "examples": [
+    "Camiseta Colo-Colo Sets Visitante 2024/25",
+    "2025/26 Colo Colo 100th Anniversary Special edición Camiseta fútbol Uniform Camiseta Sꮫꮫꮫꮫﻮﻮ",
+    "Camiseta Universidad de Chile Tercera equipación 2025/26",
+    "2022/23 Parmelas memorial edición manga larga",
+    "Camiseta Sao Paulo Visitante 1991"
+  ],
+  "original_album_recovery": "pending_private_mapping"
+}

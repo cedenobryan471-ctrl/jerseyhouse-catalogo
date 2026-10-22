@@ -1,0 +1,49 @@
+name: Recuperar fotos sin IA
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    environment: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update -q && sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
+      - run: pip install pillow
+      - name: Revisar por tandas y conservar progreso
+        env:
+          CATALOG_CONFIG: ${{ secrets.CATALOG_CONFIG }}
+        run: |
+          git config user.name catalog-bot
+          git config user.email catalog-bot@users.noreply.github.com
+          for batch in $(seq 1 40); do
+            python scripts/recover_photos.py
+            git add estado.json photo-review.json photo-recovery.json photo-recovery-summary.json
+            git diff --cached --quiet || (git commit -m 'Recuperar fotos por tanda sin IA' && git push)
+            remaining=$(python -c "import json;print(json.load(open('photo-recovery-summary.json'))['remaining'])")
+            if [ "$remaining" = 0 ]; then break; fi
+          done
+          test "$remaining" = 0
+      - uses: actions/configure-pages@v5
+      - run: |
+          mkdir -p _site
+          python3 scripts/build_tienda.py
+          cp catalog.json tienda.json estado.json resultado.json revisar.json photo-recovery-summary.json _site/
+          if [ -f portadas.json ]; then cp portadas.json _site/; fi
+          if [ -f destacados.json ]; then cp destacados.json _site/; fi
+          cp -r images _site/
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4

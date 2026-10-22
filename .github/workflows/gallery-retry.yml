@@ -1,0 +1,45 @@
+name: Reintentar tandas de galerías
+on:
+  workflow_run:
+    workflows: ['Recuperar galerías sin IA']
+    types: [completed]
+    branches: [main]
+permissions:
+  actions: write
+  contents: read
+concurrency:
+  group: gallery-retry-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+jobs:
+  retry:
+    if: github.repository == 'cedenobryan471-ctrl/jerseyhouse-catalogo' && github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+          sparse-checkout: scripts/gallery_retry.cjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/github-script@v7
+        with:
+          retries: 3
+          script: |
+            const { recoveryAction } = require('./scripts/gallery_retry.cjs');
+            const run = context.payload.workflow_run;
+            const { data: current } = await github.rest.actions.getWorkflowRun({
+              ...context.repo, run_id: run.id
+            });
+            if (current.status !== 'completed' || current.run_attempt !== run.run_attempt) return;
+            const action = recoveryAction(current);
+            if (action === 'retry') {
+              await github.rest.actions.reRunWorkflowFailedJobs({...context.repo, run_id: run.id});
+              core.info(`Reintento ${current.run_attempt}/3 solicitado.`);
+            } else if (action === 'next') {
+              await github.rest.actions.createWorkflowDispatch({
+                ...context.repo, workflow_id: 'gallery-recovery.yml', ref: 'main',
+                inputs: { pilot: 'false', continue: 'true' }
+              });
+              core.info('Siguiente tanda solicitada desde el avance guardado en main.');
+            }

@@ -1,0 +1,63 @@
+name: Catálogo semanal
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        type: choice
+        options: [all, footwear, cleanup]
+        default: all
+  schedule:
+    - cron: '0 10 * * 1'
+permissions:
+  actions: write
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update -q && sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
+      - run: pip install requests pillow beautifulsoup4
+      - run: |
+          python scripts/footwear_rules_test.py && python scripts/batch_test.py
+          if [ "$REFRESH_SCOPE" != "cleanup" ]; then python scripts/apply_photo_policy.py; fi
+          python scripts/normalize_all.py
+        env:
+          CATALOG_CONFIG: ${{ secrets.CATALOG_CONFIG }}
+          SOURCES_CONFIG: ${{ secrets.SOURCES_CONFIG }}
+          FOOTWEAR_SOURCES_CONFIG: ${{ secrets.FOOTWEAR_SOURCES_CONFIG }}
+          REFRESH_SCOPE: ${{ inputs.scope }}
+      - name: Actualizar archivos
+        run: |
+          git config user.name catalog-bot
+          git config user.email catalog-bot@users.noreply.github.com
+          git add catalog.json estado.json images resultado.json photo-review.json batch-progress.json revisar.json
+          git diff --cached --quiet || (git commit -m 'Actualizar catálogo por tanda' && git push)
+      - uses: actions/configure-pages@v5
+      - run: |
+          mkdir -p _site
+          python3 scripts/build_tienda.py
+          cp catalog.json tienda.json estado.json resultado.json revisar.json _site/
+          if [ -f portadas.json ]; then cp portadas.json _site/; fi
+          if [ -f destacados.json ]; then cp destacados.json _site/; fi
+          cp -r images _site/
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+      - name: Buscar calzado nuevo
+        if: inputs.scope != 'cleanup'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run footwear-import.yml --ref main -f continue=true || true

@@ -1,0 +1,102 @@
+name: Cargar calzado
+on:
+  push:
+    branches: [main]
+    paths: ['footwear-control.json']
+  workflow_dispatch:
+    inputs:
+      continue:
+        description: Seguir con la siguiente tanda al terminar
+        type: boolean
+        default: true
+permissions:
+  actions: write
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  footwear:
+    if: github.repository == 'cedenobryan471-ctrl/jerseyhouse-catalogo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update -q && sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
+      - run: pip install requests pillow beautifulsoup4
+      - name: Modo
+        id: mode
+        run: |
+          pilot=$(python -c "import json;print(str(json.load(open('footwear-control.json')).get('pilot',True)).lower())")
+          echo "pilot=$pilot" >> "$GITHUB_OUTPUT"
+      - name: Descargar fotos de galería existentes
+        if: steps.mode.outputs.pilot != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p gallery-extra/images
+          for attempt in $(seq 1 5); do
+            if gh release download gallery-photos --pattern gallery-extra.tar.gz --dir /tmp --clobber; then break; fi
+            if [ "$attempt" = 5 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
+          tar -xzf /tmp/gallery-extra.tar.gz -C gallery-extra
+      - name: Cargar una tanda de calzado sin IA
+        env:
+          CATALOG_CONFIG: ${{ secrets.CATALOG_CONFIG }}
+          FOOTWEAR_SOURCES_CONFIG: ${{ secrets.FOOTWEAR_SOURCES_CONFIG }}
+          FOOTWEAR_PILOT: ${{ steps.mode.outputs.pilot }}
+          FOOTWEAR_BATCH: '60'
+        run: python scripts/footwear_import.py > /dev/null && python scripts/normalize_all.py > /dev/null
+      - name: Guardar
+        run: |
+          git config user.name catalog-bot
+          git config user.email catalog-bot@users.noreply.github.com
+          if [ "${{ steps.mode.outputs.pilot }}" = true ]; then
+            git add footwear-result.json footwear-pilot || true
+          else
+            git add catalog.json images footwear-seen.json footwear-result.json
+          fi
+          git diff --cached --quiet || (git commit -m 'Cargar calzado por tanda' && git pull --rebase -q && git push)
+      - name: Publicar fotos de galería
+        if: steps.mode.outputs.pilot != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tar -czf /tmp/gallery-extra.tar.gz -C gallery-extra images
+          for attempt in $(seq 1 5); do
+            if gh release upload gallery-photos /tmp/gallery-extra.tar.gz --clobber; then break; fi
+            if [ "$attempt" = 5 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
+      - uses: actions/configure-pages@v5
+        if: steps.mode.outputs.pilot != 'true'
+      - run: |
+          mkdir -p _site
+          python3 scripts/build_tienda.py
+          cp catalog.json tienda.json estado.json resultado.json revisar.json _site/
+          if [ -f portadas.json ]; then cp portadas.json _site/; fi
+          if [ -f destacados.json ]; then cp destacados.json _site/; fi
+          cp -r images _site/
+          touch _site/.nojekyll
+        if: steps.mode.outputs.pilot != 'true'
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.mode.outputs.pilot != 'true'
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        if: steps.mode.outputs.pilot != 'true'
+      - name: Seguir con la siguiente tanda
+        if: steps.mode.outputs.pilot != 'true' && (github.event_name == 'push' || inputs.continue)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          remaining=$(python -c "import json;print(json.load(open('footwear-result.json'))['remaining'])")
+          added=$(python -c "import json;print(json.load(open('footwear-result.json'))['added'])")
+          if [ "$remaining" != 0 ]; then gh workflow run footwear-import.yml --ref main -f continue=true; fi

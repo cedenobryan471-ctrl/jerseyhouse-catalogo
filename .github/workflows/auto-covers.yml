@@ -1,0 +1,61 @@
+name: Aplicar portadas automáticas
+on:
+  push:
+    branches: [main]
+    paths: ['auto-covers.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  covers:
+    if: github.repository == 'cedenobryan471-ctrl/jerseyhouse-catalogo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow
+      - name: Intercambiar portada y foto de galería
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p gallery-extra/images
+          for attempt in $(seq 1 5); do
+            if gh release download gallery-photos --pattern gallery-extra.tar.gz --dir /tmp --clobber; then break; fi
+            if [ "$attempt" = 5 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
+          tar -xzf /tmp/gallery-extra.tar.gz -C gallery-extra
+          python scripts/auto_covers.py
+          tar -czf /tmp/gallery-extra.tar.gz -C gallery-extra images
+          for attempt in $(seq 1 5); do
+            if gh release upload gallery-photos /tmp/gallery-extra.tar.gz --clobber; then break; fi
+            if [ "$attempt" = 5 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
+          git config user.name catalog-bot
+          git config user.email catalog-bot@users.noreply.github.com
+          git add images auto-covers-applied.json
+          git diff --cached --quiet || (git commit -m 'Aplicar portadas automáticas' && git push)
+          gh workflow run photos.yml -R cedenobryan471-ctrl/jerseyhouse-fotos || true
+      - uses: actions/configure-pages@v5
+      - run: |
+          mkdir -p _site
+          python3 scripts/build_tienda.py
+          cp catalog.json tienda.json estado.json resultado.json revisar.json _site/
+          if [ -f portadas.json ]; then cp portadas.json _site/; fi
+          if [ -f destacados.json ]; then cp destacados.json _site/; fi
+          cp -r images _site/
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4

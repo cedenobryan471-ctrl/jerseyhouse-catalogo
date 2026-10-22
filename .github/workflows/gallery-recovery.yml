@@ -1,0 +1,112 @@
+name: Recuperar galerías sin IA
+on:
+  workflow_dispatch:
+    inputs:
+      pilot:
+        description: Solo preparar prueba visual de 20 productos
+        type: boolean
+        default: true
+      continue:
+        description: Continuar después de la prueba visual
+        type: boolean
+        default: false
+permissions:
+  actions: write
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  recovery:
+    if: github.repository == 'cedenobryan471-ctrl/jerseyhouse-catalogo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update -q && sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
+      - run: pip install requests pillow beautifulsoup4
+      - name: Recuperar fotos originales por tandas
+        env:
+          CATALOG_CONFIG: ${{ secrets.CATALOG_CONFIG }}
+          GH_TOKEN: ${{ github.token }}
+          GALLERY_BATCH_SIZE: '100'
+          GALLERY_PILOT: ${{ inputs.pilot }}
+        run: |
+          mkdir -p gallery-extra/images
+          downloaded=false
+          for attempt in $(seq 1 5); do
+            if gh release download gallery-photos --pattern gallery-extra.tar.gz --dir /tmp --clobber; then downloaded=true; break; fi
+            sleep $((attempt * 10))
+          done
+          if [ "$downloaded" != true ]; then exit 1; fi
+          tar -xzf /tmp/gallery-extra.tar.gz -C gallery-extra
+          curl --fail --location --retry 3 'https://github.com/cedenobryan471-ctrl/jerseyhouse-fotos/archive/refs/heads/main.tar.gz' -o /tmp/retained-photos.tar.gz
+          python3 - <<'PY'
+          import tarfile,re
+          from pathlib import Path
+          with tarfile.open('/tmp/retained-photos.tar.gz') as archive:
+              for member in archive.getmembers():
+                  if member.isfile() and re.fullmatch(r'[^/]+/images/\d+-[1-7]\.webp',member.name):
+                      destination=Path('gallery-extra/images')/Path(member.name).name
+                      if not destination.exists():
+                          source=archive.extractfile(member)
+                          if source is not None:destination.write_bytes(source.read())
+          PY
+          git config user.name catalog-bot
+          git config user.email catalog-bot@users.noreply.github.com
+          for batch in $(seq 1 1); do
+            python scripts/gallery_recovery.py
+            if [ "$GALLERY_PILOT" = true ]; then break; fi
+            git add catalog.json estado.json images photo-review.json gallery-recovery.json gallery-recovery-summary.json
+            git diff --cached --quiet || (git commit -m 'Recuperar galería por tanda' && git push)
+            remaining=$(python -c "import json;print(json.load(open('gallery-recovery-summary.json'))['remaining'])")
+            if [ "$remaining" = 0 ]; then break; fi
+          done
+      - name: Publicar paquete de fotos extra sin datos privados
+        if: '!inputs.pilot'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tar -czf /tmp/gallery-extra.tar.gz -C gallery-extra images
+          gh release view gallery-photos || gh release create gallery-photos --title 'Fotos de galería' --notes 'Solo fotos WebP con nombres propios.'
+          uploaded=false
+          for attempt in $(seq 1 5); do
+            if gh release upload gallery-photos /tmp/gallery-extra.tar.gz --clobber; then uploaded=true; break; fi
+            sleep $((attempt * 10))
+          done
+          if [ "$uploaded" != true ]; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: inputs.pilot
+        with:
+          name: prueba-visual-20
+          path: pilot-preview
+      - uses: actions/configure-pages@v5
+        if: '!inputs.pilot'
+      - run: |
+          mkdir -p _site
+          python3 scripts/build_tienda.py
+          cp catalog.json tienda.json estado.json resultado.json revisar.json gallery-recovery-summary.json _site/
+          if [ -f portadas.json ]; then cp portadas.json _site/; fi
+          if [ -f destacados.json ]; then cp destacados.json _site/; fi
+          cp -r images _site/
+          touch _site/.nojekyll
+        if: '!inputs.pilot'
+      - uses: actions/upload-pages-artifact@v3
+        if: '!inputs.pilot'
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        if: '!inputs.pilot'
+      - name: Continuar automáticamente con la siguiente tanda
+        if: inputs.continue && !inputs.pilot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          remaining=$(python -c "import json;print(json.load(open('gallery-recovery-summary.json'))['remaining'])")
+          if [ "$remaining" != 0 ]; then gh workflow run gallery-recovery.yml --ref main -f pilot=false -f continue=true; fi

@@ -1,0 +1,127 @@
+{
+  "products": 12438,
+  "sources": [
+    {
+      "source": 1,
+      "group": "footwear",
+      "added": 0,
+      "duplicates": 0,
+      "photo_rejected": 0,
+      "read_errors": 0,
+      "albums_checked": 0,
+      "models_from_categories": 0,
+      "status": "no_readable_albums",
+      "albums_discovered": 0,
+      "batch_start": 0,
+      "batch_end": 0,
+      "remaining_albums": 0,
+      "listing_pages_checked": 4
+    },
+    {
+      "source": 2,
+      "group": "footwear",
+      "added": 9,
+      "duplicates": 0,
+      "photo_rejected": 7,
+      "read_errors": 3,
+      "albums_checked": 16,
+      "models_from_categories": 3,
+      "status": "batch_complete",
+      "error_types": {
+        "fetch": 3
+      },
+      "albums_discovered": 40,
+      "batch_start": 32,
+      "batch_end": 40,
+      "remaining_albums": 0,
+      "listing_pages_checked": 8
+    },
+    {
+      "source": 3,
+      "group": "footwear",
+      "added": 0,
+      "duplicates": 0,
+      "photo_rejected": 0,
+      "read_errors": 3,
+      "albums_checked": 0,
+      "models_from_categories": 0,
+      "status": "read_failed",
+      "error_types": {
+        "certificate": 3
+      },
+      "albums_discovered": 0,
+      "batch_start": 0,
+      "batch_end": 0,
+      "remaining_albums": 0,
+      "listing_pages_checked": 3
+    }
+  ],
+  "added": 9,
+  "footwear_products": 10,
+  "privacy": {
+    "removed": 0,
+    "remaining": 0
+  },
+  "organization": {
+    "moved_from_others": {},
+    "review": 72,
+    "sections_visible": {
+      "calzado": 3,
+      "ropa-casual": 195,
+      "formula-1": 1,
+      "nba": 869,
+      "futbol": 5176,
+      "selecciones": 1518,
+      "accesorios": 23
+    },
+    "categories_visible": {
+      "calzado": 3,
+      "shorts": 93,
+      "chaquetas": 480,
+      "camisetas": 6733,
+      "conjuntos": 431,
+      "buzos": 22,
+      "accesorios": 23
+    },
+    "sections_total": {
+      "revision": 72,
+      "calzado": 3,
+      "ropa-casual": 305,
+      "futbol": 8360,
+      "formula-1": 4,
+      "nba": 1086,
+      "selecciones": 2573,
+      "accesorios": 35
+    },
+    "categories_total": {
+      "calzado": 10,
+      "shorts": 129,
+      "chaquetas": 796,
+      "camisetas": 10822,
+      "conjuntos": 553,
+      "buzos": 28,
+      "accesorios": 35,
+      "ropa-hombre": 24,
+      "otros": 41
+    }
+  },
+  "examples": [
+    "Adidas Superstar 3.0",
+    "Nike Blazer",
+    "New Balance"
+  ],
+  "photo_screening": {
+    "screened": 24,
+    "rejected": 15
+  },
+  "photo_content_privacy": "ocr_screened_not_visual_guarantee",
+  "photo_diagnostics": {
+    "original_attribute": 37,
+    "download_image": 63,
+    "ocr_attempted": 24,
+    "ocr_passed": 9,
+    "ocr_failed": 15
+  },
+  "inspected_model_examples": [],
+  "footwear_hidden_after_review": 7
+}

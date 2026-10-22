@@ -1,0 +1,49 @@
+{
+ "sources": [
+  {
+   "source": 1,
+   "added": 0,
+   "skipped": {},
+   "pages": [
+    1,
+    1
+   ],
+   "pending_before": 0,
+   "kind": null,
+   "pending_after": 0,
+   "status": "ok"
+  },
+  {
+   "source": 2,
+   "added": 0,
+   "skipped": {},
+   "pages": [
+    1,
+    1
+   ],
+   "pending_before": 0,
+   "kind": null,
+   "pending_after": 0,
+   "status": "ok"
+  },
+  {
+   "source": 3,
+   "added": 23,
+   "skipped": {
+    "duplicate_photo": 10
+   },
+   "pages": [
+    43,
+    43
+   ],
+   "pending_before": 33,
+   "kind": "album",
+   "pending_after": 0,
+   "status": "ok"
+  }
+ ],
+ "added": 23,
+ "remaining": 0,
+ "footwear_products": 3205,
+ "size_bytes": 509383364
+}

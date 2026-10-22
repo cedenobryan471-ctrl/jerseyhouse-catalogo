@@ -1,0 +1,36 @@
+{
+  "total": 12438,
+  "processed": 12397,
+  "remaining": 41,
+  "uniquely_matched": 10931,
+  "recovered": 3883,
+  "covers_changed": 9892,
+  "with_gallery": 10182,
+  "unmatched": 1504,
+  "read_errors": 90,
+  "visible": 11745,
+  "catalog_bytes": 476818429,
+  "extras_bytes": 635813820,
+  "examples": [
+    {
+      "id": "3",
+      "title": "Rompevientos Adidas blanco"
+    },
+    {
+      "id": "7",
+      "title": "Rompevientos Nike | 6"
+    },
+    {
+      "id": "8",
+      "title": "Rompevientos PRADA"
+    },
+    {
+      "id": "9",
+      "title": "Rompevientos PSG negro azul morado"
+    },
+    {
+      "id": "10",
+      "title": "Rompevientos Adidas verde S-XXL Cheap fútbol Jerseys"
+    }
+  ]
+}
