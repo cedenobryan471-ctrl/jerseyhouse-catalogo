@@ -1,12 +1,1 @@
-{
- "added": 80,
- "by_category": {
-  "chaquetas": 36,
-  "buzos": 43,
-  "conjuntos": 1
- },
- "skipped": {},
- "albums": 2116,
- "remaining": 1876,
- "status": "ok"
-}
+{"status": "pausado", "added": 0, "remaining": 0}
