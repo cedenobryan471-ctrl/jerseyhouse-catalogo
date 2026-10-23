@@ -151,6 +151,8 @@ SAFE = re.compile(r"^[A-Za-zÀ-ÿ0-9 .'/&()-]+$")
 
 def main():
     url = (os.environ.get('FUENTE_NUEVA') or '').strip()
+    if read('casual-control.json', {}).get('pause'):
+        Path('casual-result.json').write_text(json.dumps({'status': 'pausado', 'added': 0, 'remaining': 0})); return
     items = read('catalog.json', []); seen = set(read('casual-seen.json', []))
     extras = Path('gallery-extra/images'); extras.mkdir(parents=True, exist_ok=True)
     counter = max(int(p['id']) for p in items) + 1; size_now = sum(p.stat().st_size for p in Path('images').glob('*.webp'))
