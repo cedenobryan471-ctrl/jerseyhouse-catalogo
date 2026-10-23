@@ -1,12 +1,13 @@
 {
- "added": 76,
+ "added": 79,
  "by_category": {
-  "conjuntos": 76
+  "conjuntos": 54,
+  "chaquetas": 25
  },
  "skipped": {
-  "fotos_con_texto": 4
+  "fotos_con_texto": 1
  },
  "albums": 2116,
- "remaining": 1156,
+ "remaining": 1076,
  "status": "ok"
 }
