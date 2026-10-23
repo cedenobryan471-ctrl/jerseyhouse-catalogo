@@ -11,7 +11,9 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 sys.path.insert(0, 'scripts')
-from footwear_import import Site, download, choose, save, opaque, read, SIZE_BUDGET
+from footwear_import import Site, download, save, opaque, read, SIZE_BUDGET, TERMS, MAX_PHOTOS
+from photo_policy import review_image, same_photo
+from casual_photos import pick, has_text
 from photo_candidates import album_originals, seller_cover
 from sports_import import collect, album_raw
 
@@ -142,6 +144,38 @@ def fix_existing(site, albums, items, first_id=17240):
     return fixed
 
 
+def fix_photos(items_path, first_id=17240):
+    """Una sola vez: en lo ya cargado quita de la galería las fotos con texto y, si la portada tiene
+    texto, pone en su lugar la primera foto limpia. Si ninguna foto queda limpia, el producto se oculta."""
+    from PIL import Image
+    items = json.loads(Path(items_path).read_text()); extras = Path('gallery-extra/images')
+    todo = [p for p in items if p['id'].isdigit() and int(p['id']) >= first_id and not p.get('team') and p.get('cover')]
+    def check(p):
+        files = [Path('images') / p['cover']] + [extras / k for k in p.get('gallery') or []]
+        flags = []
+        for fpath in files:
+            try:
+                with Image.open(fpath) as im: flags.append(has_text(im))
+            except Exception: flags.append(True)
+        return p, flags
+    report = {'checked': len(todo), 'cover_changed': [], 'gallery_trimmed': 0, 'hidden': []}
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        for p, flags in pool.map(check, todo):
+            gallery = p.get('gallery') or []
+            clean_gallery = [k for k, bad in zip(gallery, flags[1:]) if not bad]
+            report['gallery_trimmed'] += len(gallery) - len(clean_gallery)
+            if flags[0]:
+                if not clean_gallery:
+                    p['status'] = 'hidden'; report['hidden'].append(p['id']); continue
+                new = clean_gallery.pop(0)
+                with Image.open(extras / new) as im:
+                    im.convert('RGB').save(Path('images') / p['cover'], 'WEBP', quality=75)
+                report['cover_changed'].append(p['id'])
+            p['gallery'] = clean_gallery
+    Path(items_path).write_text(json.dumps(items, ensure_ascii=False, separators=(',', ':')))
+    return report
+
+
 def build_title(label, brand, women):
     return ' '.join([label] + ([brand] if brand else []) + (['Mujer'] if women else []))
 
@@ -151,7 +185,10 @@ SAFE = re.compile(r"^[A-Za-zÀ-ÿ0-9 .'/&()-]+$")
 
 def main():
     url = (os.environ.get('FUENTE_NUEVA') or '').strip()
-    if read('casual-control.json', {}).get('pause'):
+    control = read('casual-control.json', {})
+    if control.get('fix_photos') and not Path('casual-photos-fixed.json').exists():
+        Path('casual-photos-fixed.json').write_text(json.dumps(fix_photos(items_path='catalog.json')))
+    if control.get('pause'):
         Path('casual-result.json').write_text(json.dumps({'status': 'pausado', 'added': 0, 'remaining': 0})); return
     items = read('catalog.json', []); seen = set(read('casual-seen.json', []))
     extras = Path('gallery-extra/images'); extras.mkdir(parents=True, exist_ok=True)
@@ -185,8 +222,12 @@ def main():
             if cover and cover in urls: urls.remove(cover)
             images = download(site, ([cover] if cover else []) + urls, aurl)
             if not images: return entry, None, 'sin_fotos'
-            selected = choose(images, 0 if cover else None)
-            if not selected: return entry, None, 'fotos_rechazadas'
+            approved = []
+            for i, im in enumerate(images[:9]):
+                if review_image(im, TERMS)[0] == 'rejected' or any(same_photo(im, images[j]) for j in approved): continue
+                approved.append(i)
+            selected = pick(images, 0 if cover else None, approved, MAX_PHOTOS)
+            if not selected: return entry, None, 'fotos_con_texto'
             kept = []
             for i in selected:
                 im = images[i].copy(); im.thumbnail((600, 600)); kept.append(im)
