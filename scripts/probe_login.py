@@ -29,5 +29,9 @@ for src in out['scripts']:
 out['js_snips'] = snips
 inline = ' '.join(x.get_text() for x in soup.select('script:not([src])'))
 out['inline'] = [inline[max(0, m.start() - 400): m.end() + 600] for m in re.finditer(r'indexlock|passwd|password|lock', inline)][:20]
+if clave:
+    r2 = requests.get(url, headers=UA, cookies={'indexlockcode': clave}, timeout=30)
+    out['albums_con_clave'] = len(set(re.findall(r'/albums/(\d+)', r2.text)))
+    out['sigue_bloqueado'] = 'indexlock__main' in r2.text
 json.dump(out, open('/tmp/probe/login.json', 'w'), ensure_ascii=False)
-print(json.dumps({k: out[k] for k in ('status', 'albums_sin_clave', 'tiene_clave')}))
+print(json.dumps({k: out.get(k) for k in ('status', 'albums_sin_clave', 'tiene_clave', 'albums_con_clave', 'sigue_bloqueado')}))

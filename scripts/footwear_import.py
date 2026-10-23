@@ -51,6 +51,8 @@ class Site:
         self.verify = True
         self.names = {}
         self.store_words = set()
+        # Si la fuente tiene candado, la clave viaja solo en la cookie de esa página (nunca se guarda).
+        self.cookies = {'indexlockcode': os.environ['CLAVE'].strip()} if os.environ.get('CLAVE', '').strip() else {}
 
     def learn_store(self, page):
         # Palabras del nombre de la tienda del proveedor: nunca pueden aparecer en un título.
@@ -66,7 +68,7 @@ class Site:
         if referer: headers['Referer'] = referer
         for attempt in range(3):
             try:
-                r = requests.get(url, headers=headers, timeout=(8, 25), verify=self.verify if urlparse(url).netloc == self.host else True)
+                r = requests.get(url, headers=headers, timeout=(8, 25), verify=self.verify if urlparse(url).netloc == self.host else True, cookies=self.cookies if urlparse(url).netloc == self.host else None)
                 r.raise_for_status(); return r
             except requests.exceptions.SSLError:
                 # Solo para leer el HTML público del catálogo; las fotos siempre se verifican.
