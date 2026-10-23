@@ -1,0 +1,38 @@
+name: Portadas de prenda completa
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: Aplicar al catálogo
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  covers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow "transformers<5" torch --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Descargar fotos de galería
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p gallery-extra && gh release download gallery-photos --pattern gallery-extra.tar.gz --dir /tmp --clobber && tar -xzf /tmp/gallery-extra.tar.gz -C gallery-extra
+      - name: Detectar
+        env:
+          APPLY: ${{ inputs.apply }}
+        run: python scripts/full_covers.py 2> full-covers-error.txt || true
+      - name: Guardar
+        run: |
+          git config user.name catalog-bot; git config user.email catalog-bot@users.noreply.github.com
+          git add full-covers.json full-covers-error.txt 2>/dev/null || git add full-covers-error.txt
+          if [ "${{ inputs.apply }}" = true ]; then git add catalog.json images; fi
+          git diff --cached --quiet || (git commit -qm "Portadas de prenda completa" && git pull --rebase -q && git push)
