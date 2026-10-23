@@ -1,13 +1,10 @@
 {
- "added": 76,
+ "added": 80,
  "by_category": {
-  "pantalones": 76
+  "pantalones": 80
  },
- "skipped": {
-  "sin_fotos": 1,
-  "fotos_con_texto": 3
- },
+ "skipped": {},
  "albums": 2116,
- "remaining": 1396,
+ "remaining": 1316,
  "status": "ok"
 }
