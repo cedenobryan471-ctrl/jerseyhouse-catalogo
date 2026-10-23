@@ -101,6 +101,47 @@ def sizes_of(raw, cat):
     return ['S', 'M', 'L', 'XL', '2XL']
 
 
+UNISEX = r'情侣|男女|中性|unisex'
+
+
+def audience_of(cat, raw):
+    if cat == 'faldas' or (has(r'女', raw) and not has(r'男', raw)): return ['mujer']
+    if cat != 'bolsos' and has(UNISEX, raw): return ['hombre', 'mujer']
+    return ['hombre']
+
+
+def dhash(im):
+    g = im.convert('L').resize((9, 8)); px = list(g.getdata())
+    return [px[r * 9 + c] > px[r * 9 + c + 1] for r in range(8) for c in range(8)]
+
+
+def fix_existing(site, albums, items, first_id=17240):
+    """Una sola vez: corrige el público (mujer/unisex) de lo ya cargado. Solo cambia si la portada coincide."""
+    from PIL import Image
+    loaded = {int(p['id']): p for p in items if p['id'].isdigit() and int(p['id']) >= first_id and not p.get('team')}
+    def one(k):
+        p = loaded.get(first_id + k)
+        if not p or k >= len(albums): return None
+        aid, aurl, ctx = albums[k]
+        try:
+            page = site.page(aurl); raw = album_raw(page); cover = seller_cover(page, aurl)
+            imgs = download(site, [cover], aurl) if cover else []
+            mine = Image.open(Path('images') / p['cover'])
+            if not imgs or sum(a != b for a, b in zip(dhash(imgs[0]), dhash(mine))) > 12: return None
+            return p, audience_of(p['categorySlug'], raw)
+        except Exception:
+            return None
+    fixed = 0
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        for res in pool.map(one, range(len(loaded))):
+            if not res: continue
+            p, aud = res
+            if aud != p.get('audiences'):
+                p['audiences'] = aud; fixed += 1
+                if aud == ['mujer'] and not p['title'].endswith('Mujer'): p['title'] += ' Mujer'
+    return fixed
+
+
 def build_title(label, brand, women):
     return ' '.join([label] + ([brand] if brand else []) + (['Mujer'] if women else []))
 
@@ -120,6 +161,9 @@ def main():
     site = Site(url)
     albums = collect(site, 'casual')
     key = lambda a: opaque(site.host, 'casual', a[0])
+    if not PILOT and not Path('casual-audience-fixed.json').exists():
+        report['audience_fixed'] = fix_existing(site, albums, items)
+        Path('casual-audience-fixed.json').write_text(json.dumps({'fixed': report['audience_fixed']}))
     pending = [a for a in albums if key(a) not in seen]
     report['albums'] = len(albums)
     batch = pending[::max(1, len(pending) // 40)][:40] if PILOT else pending[:BATCH]
@@ -131,7 +175,7 @@ def main():
             kind = classify(ctx, raw)
             if not kind: return entry, None, 'tipo_desconocido'
             cat, label = kind
-            women = cat == 'faldas' or (has(r'女', raw) and not has(r'男女|情侣|男', raw))
+            aud = audience_of(cat, raw); women = aud == ['mujer']
             brand = brand_of(raw)
             title = build_title(label, brand, women)
             if not SAFE.match(title): return entry, None, 'titulo_inseguro'
@@ -144,7 +188,7 @@ def main():
             kept = []
             for i in selected:
                 im = images[i].copy(); im.thumbnail((600, 600)); kept.append(im)
-            return entry, dict(cat=cat, title=title, brand=brand, women=women, colors=colors_of(raw),
+            return entry, dict(cat=cat, title=title, brand=brand, women=women, aud=aud, colors=colors_of(raw),
                                sizes=sizes_of(raw, cat), images=kept), 'ok'
         except Exception as e:
             return entry, None, 'error_' + type(e).__name__
@@ -168,7 +212,7 @@ def main():
             brand = data['brand'] or 'Otras marcas'
             items.insert(0, {'id': ident, 'slug': ident, 'title': data['title'], 'brand': brand, 'team': None, 'teamSlug': None,
                 'league': None, 'leagueSlug': None, 'categorySlug': cat, 'category': CATS[cat], 'sizes': data['sizes'],
-                'season': None, 'version': None, 'audiences': ['mujer'] if data['women'] else ['hombre'], 'colors': data['colors'],
+                'season': None, 'version': None, 'audiences': data['aud'], 'colors': data['colors'],
                 'price': None, 'status': 'active', 'cover': f'{ident}.webp',
                 'sectionSlug': 'accesorios' if cat == 'bolsos' else 'ropa-casual', 'gallery': keys})
             size_now += (Path('images') / f'{ident}.webp').stat().st_size

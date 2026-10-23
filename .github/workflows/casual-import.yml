@@ -62,7 +62,7 @@ jobs:
           if [ "${{ steps.mode.outputs.pilot }}" = true ]; then
             git add casual-result.json casual-pilot || true
           else
-            git add catalog.json images casual-seen.json casual-result.json
+            git add catalog.json images casual-seen.json casual-result.json; git add casual-audience-fixed.json 2>/dev/null || true
           fi
           git diff --cached --quiet || (git commit -m 'Cargar ropa de marca por tanda' && git pull --rebase -q && git push)
       - name: Publicar fotos de galería
