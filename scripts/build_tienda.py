@@ -17,6 +17,7 @@ def compact(p):
             q['g'] = len(v); continue
         q[k] = v
     if p.get('cover') is None: q['cover'] = None
+    if 'version' in p and p['version'] is None: q['version'] = None  # sin etiqueta "Versión" (ropa de marca, calzado)
     return q
 
 def main():
