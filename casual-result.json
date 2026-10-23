@@ -1,11 +1,12 @@
 {
  "added": 80,
  "by_category": {
-  "buzos": 75,
-  "conjuntos": 5
+  "buzos": 66,
+  "conjuntos": 1,
+  "camisetas": 13
  },
  "skipped": {},
  "albums": 486,
- "remaining": 326,
+ "remaining": 246,
  "status": "ok"
 }
