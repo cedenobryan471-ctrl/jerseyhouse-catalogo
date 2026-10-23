@@ -37,7 +37,7 @@ COLORS = [('azul marino', r'藏青|藏蓝|深蓝|navy'), ('celeste', r'浅蓝|�
     ('naranja', r'橙|orange')]
 SCALE = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL']
 CATS = {'camisetas': 'Camisetas', 'chaquetas': 'Chaquetas', 'buzos': 'Buzos', 'shorts': 'Shorts', 'pantalones': 'Pantalones',
-        'conjuntos': 'Conjuntos', 'faldas': 'Faldas y vestidos', 'bolsos': 'Salveques y bolsos'}
+        'conjuntos': 'Conjuntos', 'faldas': 'Faldas y vestidos', 'bolsos': 'Salveques y bolsos', 'gorras': 'Gorras y gorros'}
 
 
 def has(rx, text):
@@ -52,6 +52,8 @@ def classify(ctx, raw):
         if has(r'斜挎|单肩|crossbody', raw): return 'bolsos', 'Bolso cruzado'
         if has(r'手提|tote', raw): return 'bolsos', 'Bolso'
         return 'bolsos', 'Salveque'
+    if has(r'毛线帽|针织帽|冷帽|beanie', raw): return 'gorras', 'Gorro'
+    if has(r'棒球帽|鸭舌帽|(?<![连带])帽子', raw): return 'gorras', 'Gorra'
     if has(r'连衣裙', t): return 'faldas', 'Vestido'
     if has(r'裙', t): return 'faldas', 'Falda'
     if has(r'三件套', t): return 'conjuntos', 'Conjunto de 3 piezas'
@@ -109,7 +111,7 @@ def colors_of(raw):
 
 
 def sizes_of(raw, cat):
-    if cat == 'bolsos': return ['Única']
+    if cat in ('bolsos', 'gorras'): return ['Única']
     t = (raw or '').upper().replace(' ', '').replace('XXXXL', '4XL').replace('XXXL', '3XL').replace('XXL', '2XL')
     m = re.search(r'(XS|[2-5]XL|XL|S|M|L)[-—~～到至]+(XS|[2-5]XL|XL|S|M|L)', t)
     if m and m.group(1) in SCALE and m.group(2) in SCALE:
@@ -280,7 +282,7 @@ def main():
                 'league': None, 'leagueSlug': None, 'categorySlug': cat, 'category': CATS[cat], 'sizes': data['sizes'],
                 'season': None, 'version': None, 'audiences': data['aud'], 'colors': data['colors'],
                 'price': None, 'status': 'active', 'cover': f'{ident}.webp',
-                'sectionSlug': 'accesorios' if cat == 'bolsos' else 'ropa-casual', 'gallery': keys})
+                'sectionSlug': 'accesorios' if cat in ('bolsos', 'gorras') else 'ropa-casual', 'gallery': keys})
             size_now += (Path('images') / f'{ident}.webp').stat().st_size
             seen.add(key(entry))
         report['added'] += 1
