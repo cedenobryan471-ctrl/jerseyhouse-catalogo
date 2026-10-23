@@ -1,12 +1,13 @@
 {
- "added": 76,
+ "added": 77,
  "by_category": {
-  "camisetas": 76
+  "camisetas": 72,
+  "faldas": 5
  },
  "skipped": {
-  "fotos_con_texto": 4
+  "fotos_con_texto": 3
  },
  "albums": 2116,
- "remaining": 356,
+ "remaining": 276,
  "status": "ok"
 }
