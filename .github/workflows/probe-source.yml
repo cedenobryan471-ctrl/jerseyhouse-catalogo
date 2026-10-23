@@ -23,7 +23,7 @@ jobs:
         env:
           FUENTE_NUEVA: ${{ secrets[inputs.secreto] }}
           FUENTE: ${{ secrets[inputs.secreto] }}
-          CLAVE: ${{ secrets[format('{0}_CLAVE', inputs.secreto)] }}
+          CLAVE: ${{ secrets[format('{0}_CLAVE', inputs.secreto)] || secrets[format('{0}_CONTRASENA', inputs.secreto)] || secrets[format('{0}_CONTRASEÑA', inputs.secreto)] }}
         run: |
           mkdir -p /tmp/probe
           python scripts/probe_login.py > /tmp/count_login.json || echo '{"login":"error"}' > /tmp/count_login.json
