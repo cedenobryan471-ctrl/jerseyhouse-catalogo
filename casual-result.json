@@ -1,12 +1,14 @@
 {
- "added": 80,
+ "added": 51,
  "by_category": {
-  "buzos": 66,
-  "conjuntos": 1,
-  "camisetas": 13
+  "camisetas": 49,
+  "gorras": 1,
+  "buzos": 1
  },
- "skipped": {},
+ "skipped": {
+  "fotos_con_texto": 29
+ },
  "albums": 486,
- "remaining": 246,
+ "remaining": 166,
  "status": "ok"
 }
