@@ -21,7 +21,7 @@ PILOT = os.environ.get('CASUAL_PILOT') == 'true'
 BATCH = int(os.environ.get('CASUAL_BATCH', '80'))
 
 BRANDS = [
-    ('Adidas Originals', r'三叶草|叶草|originals|clover'), ('Adidas', r'阿迪|adidas|\bad\b'),
+    ('Adidas', r'三叶草|叶草|originals|clover|阿迪|adidas|\bad\b'),
     ('Jordan', r'乔丹|jordan|\baj\b'), ('Nike', r'耐克|nike|\bnk'), ('The North Face', r'北面|north\s*face|\btnf\b'),
     ('Puma', r'彪马|puma'), ('Under Armour', r'安德玛|安德码|under\s*armou?r|\bua\b'), ('New Balance', r'新百伦|new\s*balance|\bnb\b'),
     ("Arc'teryx", r'始祖鸟|arc.?teryx'), ('Lululemon', r'lululemon|露露'), ('Fila', r'斐乐|\bfila\b'), ('Descente', r'迪桑特|descente'),
