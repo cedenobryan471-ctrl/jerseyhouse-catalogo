@@ -1,15 +1,12 @@
 {
- "added": 79,
+ "added": 5,
  "by_category": {
-  "buzos": 68,
-  "shorts": 1,
-  "pantalones": 8,
-  "chaquetas": 2
+  "chaquetas": 5
  },
  "skipped": {
   "tipo_desconocido": 1
  },
  "albums": 486,
- "remaining": 6,
+ "remaining": 0,
  "status": "ok"
 }
