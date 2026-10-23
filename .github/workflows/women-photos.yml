@@ -1,0 +1,38 @@
+name: Detectar fotos con mujer
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: Aplicar al catálogo
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  women:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow transformers torch --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Descargar fotos de galería
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p gallery-extra && gh release download gallery-photos --pattern gallery-extra.tar.gz --dir /tmp --clobber && tar -xzf /tmp/gallery-extra.tar.gz -C gallery-extra
+      - name: Detectar
+        env:
+          APPLY: ${{ inputs.apply }}
+        run: python scripts/women_photos.py
+      - name: Guardar
+        run: |
+          git config user.name catalog-bot; git config user.email catalog-bot@users.noreply.github.com
+          git add women-photos.json
+          if [ "${{ inputs.apply }}" = true ]; then git add catalog.json; fi
+          git diff --cached --quiet || (git commit -qm "Fotos con mujer en ropa de marca" && git pull --rebase -q && git push)
