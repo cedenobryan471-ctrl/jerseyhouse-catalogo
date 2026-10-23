@@ -186,6 +186,8 @@ SAFE = re.compile(r"^[A-Za-zÀ-ÿ0-9 .'/&()-]+$")
 def main():
     url = (os.environ.get('FUENTE_NUEVA') or '').strip()
     control = read('casual-control.json', {})
+    from casual_photos import _ocr
+    _ocr()  # si el lector de texto no carga, se detiene aquí sin ocultar ni saltar nada
     if control.get('fix_photos') and not Path('casual-photos-fixed.json').exists():
         Path('casual-photos-fixed.json').write_text(json.dumps(fix_photos(items_path='catalog.json')))
     if control.get('pause'):
