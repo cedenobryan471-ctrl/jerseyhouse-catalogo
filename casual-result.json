@@ -1,13 +1,14 @@
 {
- "added": 78,
+ "added": 74,
  "by_category": {
-  "shorts": 77,
-  "faldas": 1
+  "shorts": 40,
+  "conjuntos": 19,
+  "chaquetas": 15
  },
  "skipped": {
-  "fotos_con_texto": 2
+  "fotos_con_texto": 6
  },
  "albums": 2116,
- "remaining": 756,
+ "remaining": 676,
  "status": "ok"
 }
