@@ -1,15 +1,12 @@
 {
- "added": 40,
+ "added": 80,
  "by_category": {
-  "chaquetas": 9,
-  "buzos": 7,
-  "pantalones": 7,
-  "conjuntos": 8,
-  "shorts": 3,
-  "camisetas": 6
+  "chaquetas": 49,
+  "buzos": 30,
+  "faldas": 1
  },
  "skipped": {},
  "albums": 2116,
- "remaining": 0,
+ "remaining": 2036,
  "status": "ok"
 }
