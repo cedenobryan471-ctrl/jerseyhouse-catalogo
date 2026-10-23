@@ -44,11 +44,18 @@ seen = {}
 for pid, hs in hashes.items():
     for h in set(x for x in hs if x):
         seen.setdefault(h, set()).add(pid)
-generic = {h for h, ids in seen.items() if len(ids) >= 3}
-report = {'checked': len(todo), 'generic_photos': len(generic), 'changed': [], 'hidden': [], 'trimmed': 0}
+scores = {pid: full_scores(fs) for pid, fs in files.items()}
+by_hash = {}
+for pid, hs in hashes.items():
+    for h, sc in zip(hs, scores[pid]):
+        if h: by_hash.setdefault(h, []).append(sc)
+# Genérica = repetida en 3+ productos Y es un acercamiento (no la prenda completa).
+generic = {h for h, ids in seen.items() if len(ids) >= 3 and sum(by_hash[h]) / len(by_hash[h]) < 0.6}
+duplicates = sum(1 for h, ids in seen.items() if len(ids) >= 2 and h not in generic)
+report = {'checked': len(todo), 'generic_photos': len(generic), 'duplicate_photos': duplicates, 'changed': [], 'hidden': [], 'trimmed': 0}
 for p in todo:
     gallery = p.get('gallery') or []
-    hs = hashes[p['id']]; sc = full_scores(files[p['id']])
+    hs = hashes[p['id']]; sc = scores[p['id']]
     own = [i for i in range(len(sc)) if hs[i] not in generic]
     cover_ok = 0 in own and sc[0] >= 0.5
     keep_gallery = [gallery[i - 1] for i in own if i > 0]
