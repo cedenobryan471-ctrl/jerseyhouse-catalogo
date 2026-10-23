@@ -37,13 +37,15 @@ def has_text(im):
     try:
         chinese, banner = text_marks(im)
     except Exception:
-        return False
+        return True
     return chinese >= 2 or banner >= 2
 
 
 def pick(images, seller_index, approved, max_photos):
     """approved: índices ya aprobados por la revisión general. Devuelve [portada, ...] sin fotos con texto."""
-    clean = [i for i in approved if not has_text(images[i])]
-    if not clean: return []
-    order = ([seller_index] if seller_index in clean else []) + [i for i in clean if i != seller_index]
-    return order[:max_photos]
+    order = ([seller_index] if seller_index in approved else []) + [i for i in approved if i != seller_index]
+    clean = []
+    for i in order:
+        if not has_text(images[i]): clean.append(i)
+        if len(clean) >= max_photos: break
+    return clean
