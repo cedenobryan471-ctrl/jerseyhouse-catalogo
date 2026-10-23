@@ -29,7 +29,7 @@ def scores(paths):
 
 items = json.loads(Path('catalog.json').read_text())
 extras = Path('gallery-extra/images')
-todo = [p for p in items if p.get('sectionSlug') == 'ropa-casual' and p.get('cover') and p['categorySlug'] != 'faldas']
+todo = [p for p in items if p.get('sectionSlug') == 'ropa-casual' and p.get('cover') and p['categorySlug'] != 'faldas' and not p.get('womanPhoto') and 'nino' not in p['audiences']]
 out = {}
 for p in todo:
     paths = [Path('images') / p['cover']] + [extras / k for k in p.get('gallery') or []]
@@ -42,5 +42,7 @@ if APPLY:
         if s and max(s) >= 0.6:
             p['womanPhoto'] = True; marked += 1
             if 'mujer' not in p['audiences']: p['audiences'] = p['audiences'] + ['mujer']
+            j = max(range(len(s)), key=lambda i: s[i]); g = p.get('gallery') or []
+            if s[0] < 0.6 and 0 < j <= len(g): p['womanImage'] = g[j - 1]
     Path('catalog.json').write_text(json.dumps(items, ensure_ascii=False, separators=(',', ':')))
     print('marcadas', marked)
