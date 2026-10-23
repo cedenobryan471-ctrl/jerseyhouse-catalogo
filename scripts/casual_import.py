@@ -27,7 +27,7 @@ BRANDS = [
     ("Arc'teryx", r'始祖鸟|arc.?teryx'), ('Lululemon', r'lululemon|露露'), ('Fila', r'斐乐|\bfila\b'), ('Descente', r'迪桑特|descente'),
     ('Salomon', r'萨洛蒙|salomon'), ('Columbia', r'哥伦比亚|columbia'), ('Champion', r'冠军|champion'), ('Kappa', r'卡帕|kappa'),
     ('Reebok', r'锐步|reebok'), ('Asics', r'亚瑟士|asics'), ('Converse', r'匡威|converse'), ('Vans', r'万斯|\bvans\b'),
-    ('Lacoste', r'鳄鱼|lacoste'), ('Ralph Lauren', r'拉夫劳伦|ralph\s*lauren|\bpolo\s*rl'), ('Tommy Hilfiger', r'汤米|tommy'),
+    ('Lacoste', r'鳄鱼|lacoste'), ('Ralph Lauren', r'拉夫劳伦|ralph\s*lauren|\bpolo\s*rl|保罗|小马|polo保罗'), ('Fendi', r'芬迪|fendi'), ('Louis Vuitton', r'路易|\blv\b|louis\s*vuitton'), ('Gucci', r'古驰|gucci'), ('Burberry', r'博柏利|巴宝莉|burberry'), ('Prada', r'普拉达|prada'), ('Balenciaga', r'巴黎世家|balenciaga'), ('Tommy Hilfiger', r'汤米|tommy'),
     ('Calvin Klein', r'\bck\b|calvin'), ('Hugo Boss', r'\bboss\b|波士'), ('Moncler', r'蒙口|moncler'), ('Canada Goose', r'加拿大鹅|canada\s*goose'),
     ('Stone Island', r'石头岛|stone\s*island'), ('Mizuno', r'美津浓|mizuno'), ('Umbro', r'茵宝|umbro'), ('Ellesse', r'ellesse'),
 ]
@@ -55,6 +55,10 @@ def classify(ctx, raw):
     if has(r'连衣裙', t): return 'faldas', 'Vestido'
     if has(r'裙', t): return 'faldas', 'Falda'
     if has(r'三件套', t): return 'conjuntos', 'Conjunto de 3 piezas'
+    if has(r'卫衣', ctx) and has(r'套装', ctx) and not has(r'套', raw):
+        if has(r'开衫|拉链|zip', raw): return 'buzos', 'Sudadera con cierre'
+        if has(r'连帽|帽衫|带帽|hood', raw): return 'buzos', 'Sudadera con capucha'
+        return 'buzos', 'Sudadera'
     if has(r'长套|短套|(?<!外)套装', ctx) or (not has(r'外套|夹克|卫衣', raw) and has(r'长套|短套|(?<!外)套装', raw)):
         return 'conjuntos', 'Conjunto corto' if has(r'短套|短裤|短袖|夏季', t) else 'Conjunto largo'
     if has(r'短裤', ctx): return 'shorts', 'Pantaloneta'
@@ -67,6 +71,10 @@ def classify(ctx, raw):
     if has(r'冲锋衣', t): return 'chaquetas', 'Chaqueta impermeable'
     if has(r'防晒|皮肤衣', t): return 'chaquetas', 'Chaqueta con protección solar'
     if has(r'风衣|防风|windbreaker', t): return 'chaquetas', 'Rompevientos'
+    if has(r'毛背心|针织背心|马甲毛衣', raw): return 'buzos', 'Chaleco de punto'
+    if has(r'毛衣|针织衫|羊毛|knit', raw) or (has(r'毛衣', ctx) and not has(r'短袖|T恤|polo衫', raw)):
+        return 'buzos', 'Suéter con botones' if has(r'开衫|纽扣|cardigan', raw) else 'Suéter'
+    if has(r'衬衫|shirt\b', raw) and not has(r'T恤|t-?shirt', raw): return 'camisetas', 'Camisa'
     if has(r'卫衣|hoodie|sweatshirt', raw):
         if has(r'开衫|拉链|zip', raw): return 'buzos', 'Sudadera con cierre'
         if has(r'连帽|帽衫|hood', raw): return 'buzos', 'Sudadera con capucha'
@@ -77,6 +85,13 @@ def classify(ctx, raw):
     if has(r'裤|pants', raw): return 'pantalones', 'Pantalón'
     if has(r'polo', raw): return 'camisetas', 'Polo'
     if has(r'T恤|短袖|t-?shirt|tee', raw): return 'camisetas', 'Camiseta'
+    # Sin pista en el título: la categoría del álbum decide.
+    if has(r'polo', ctx): return 'camisetas', 'Polo'
+    if has(r'衬衫', ctx): return 'camisetas', 'Camisa'
+    if has(r'长袖', ctx): return 'camisetas', 'Camiseta manga larga'
+    if has(r'裤', ctx): return 'pantalones', 'Pantalón'
+    if has(r'卫衣', ctx): return 'buzos', 'Sudadera'
+    if has(r'夏装|短袖|鳄鱼', ctx): return 'camisetas', 'Polo' if has(r'鳄鱼|polo', ctx + raw) else 'Camiseta'
     return None
 
 
@@ -100,6 +115,10 @@ def sizes_of(raw, cat):
     if m and m.group(1) in SCALE and m.group(2) in SCALE:
         a, b = SCALE.index(m.group(1)), SCALE.index(m.group(2))
         if a < b: return SCALE[a:b + 1]
+    spaced = (raw or '').upper().replace('XXXXL', '4XL').replace('XXXL', '3XL').replace('XXL', '2XL')
+    found = {x for x in re.findall(r'(?<![A-Z0-9])(XS|[2-5]XL|XL|S|M|L)(?![A-Z])', spaced)}
+    if len(found) >= 3:
+        return [x for x in SCALE if x in found]
     return ['S', 'M', 'L', 'XL', '2XL']
 
 
@@ -217,8 +236,10 @@ def main():
             if not kind: return entry, None, 'tipo_desconocido'
             cat, label = kind
             aud = audience_of(cat, raw); women = aud == ['mujer']
-            brand = brand_of(raw)
-            title = build_title(label, brand, women)
+            kids = has(r'童装|儿童|童款', raw)
+            if kids: aud = ['nino']
+            brand = brand_of(raw) or brand_of(ctx)
+            title = build_title(label, brand, women) + (' (Niño)' if kids else '')
             if not SAFE.match(title): return entry, None, 'titulo_inseguro'
             urls = album_originals(page, aurl)[:10]; cover = seller_cover(page, aurl)
             if cover and cover in urls: urls.remove(cover)

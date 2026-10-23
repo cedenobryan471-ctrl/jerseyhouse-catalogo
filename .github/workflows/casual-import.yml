@@ -35,6 +35,8 @@ jobs:
         run: |
           pilot=$(python -c "import json;print(str(json.load(open('casual-control.json')).get('pilot',True)).lower())")
           echo "pilot=$pilot" >> "$GITHUB_OUTPUT"
+          fuente=$(python -c "import json;print(json.load(open('casual-control.json')).get('fuente','FUENTE_NUEVA'))")
+          echo "fuente=$fuente" >> "$GITHUB_OUTPUT"
       - name: Descargar fotos de galería existentes
         if: steps.mode.outputs.pilot != 'true'
         env:
@@ -50,7 +52,8 @@ jobs:
       - name: Cargar una tanda sin IA
         env:
           CATALOG_CONFIG: ${{ secrets.CATALOG_CONFIG }}
-          FUENTE_NUEVA: ${{ secrets.FUENTE_NUEVA }}
+          FUENTE_NUEVA: ${{ secrets[steps.mode.outputs.fuente] }}
+          CLAVE: ${{ secrets[format('{0}_CLAVE', steps.mode.outputs.fuente)] }}
           CASUAL_PILOT: ${{ steps.mode.outputs.pilot }}
           CASUAL_BATCH: '80'
         run: |
