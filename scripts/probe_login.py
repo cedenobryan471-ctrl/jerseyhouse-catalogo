@@ -15,5 +15,19 @@ out['forms'] = [{'action': f.get('action'), 'method': f.get('method'), 'inputs':
 out['js'] = [r.text[max(0, m.start() - 300): m.end() + 300] for m in re.finditer(r'password|passwd|pwd|密码', r.text, re.I)][:12]
 out['cookies'] = list(s.cookies.get_dict().keys())
 out['html_inicio'] = r.text[:4000]
+# Código de la página que maneja el candado (JS público de la plataforma).
+out['scripts'] = [urljoin(r.url, x.get('src')) for x in soup.select('script[src]')]
+snips = []
+for src in out['scripts']:
+    try:
+        js = s.get(src, timeout=30).text
+    except Exception:
+        continue
+    for m in re.finditer(r'indexlock|passwd|password|/api/', js):
+        snips.append(src.rsplit('/', 1)[-1] + ': ' + js[max(0, m.start() - 400): m.end() + 600])
+        if len(snips) > 60: break
+out['js_snips'] = snips
+inline = ' '.join(x.get_text() for x in soup.select('script:not([src])'))
+out['inline'] = [inline[max(0, m.start() - 400): m.end() + 600] for m in re.finditer(r'indexlock|passwd|password|lock', inline)][:20]
 json.dump(out, open('/tmp/probe/login.json', 'w'), ensure_ascii=False)
 print(json.dumps({k: out[k] for k in ('status', 'albums_sin_clave', 'tiene_clave')}))
