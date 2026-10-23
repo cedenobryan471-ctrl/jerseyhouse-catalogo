@@ -1,12 +1,11 @@
 {
  "added": 80,
  "by_category": {
-  "chaquetas": 49,
-  "buzos": 30,
-  "faldas": 1
+  "chaquetas": 50,
+  "buzos": 30
  },
  "skipped": {},
  "albums": 2116,
- "remaining": 2036,
+ "remaining": 1956,
  "status": "ok"
 }
