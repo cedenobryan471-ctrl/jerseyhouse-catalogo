@@ -1,5 +1,12 @@
 name: Revisar fuente nueva
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      secreto:
+        description: Secreto con la dirección de la fuente
+        type: choice
+        options: [FUENTE_NUEVA, FUENTE_NUEVA_2]
+        default: FUENTE_NUEVA_2
 permissions:
   contents: write
 jobs:
@@ -14,7 +21,7 @@ jobs:
       - run: pip install requests pillow beautifulsoup4
       - name: Revisar (sin publicar la dirección)
         env:
-          FUENTE_NUEVA: ${{ secrets.FUENTE_NUEVA }}
+          FUENTE_NUEVA: ${{ secrets[inputs.secreto] }}
         run: |
           python scripts/probe_source.py > /tmp/count.json
           cat /tmp/count.json
