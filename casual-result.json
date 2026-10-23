@@ -1,16 +1,15 @@
 {
- "added": 64,
+ "added": 79,
  "by_category": {
-  "camisetas": 55,
-  "faldas": 1,
-  "buzos": 7,
-  "pantalones": 1
+  "buzos": 68,
+  "shorts": 1,
+  "pantalones": 8,
+  "chaquetas": 2
  },
  "skipped": {
-  "fotos_con_texto": 2,
-  "tipo_desconocido": 14
+  "tipo_desconocido": 1
  },
  "albums": 486,
- "remaining": 86,
+ "remaining": 6,
  "status": "ok"
 }
