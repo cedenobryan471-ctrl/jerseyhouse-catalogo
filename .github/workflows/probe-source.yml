@@ -22,17 +22,21 @@ jobs:
       - name: Revisar (sin publicar la dirección)
         env:
           FUENTE_NUEVA: ${{ secrets[inputs.secreto] }}
+          FUENTE: ${{ secrets[inputs.secreto] }}
+          CLAVE: ${{ secrets[format('{0}_CLAVE', inputs.secreto)] }}
         run: |
-          python scripts/probe_source.py > /tmp/count.json
-          cat /tmp/count.json
-          if [ -f /tmp/probe/sample.json ]; then
+          mkdir -p /tmp/probe
+          python scripts/probe_login.py > /tmp/count_login.json || echo '{"login":"error"}' > /tmp/count_login.json
+          python scripts/probe_source.py > /tmp/count.json || echo '{"probe":"error"}' > /tmp/count.json
+          cat /tmp/count_login.json >> /tmp/count.json
+          for f in /tmp/probe/*.json; do
             openssl rand -out /tmp/k.bin 32
-            openssl enc -aes-256-cbc -pbkdf2 -salt -in /tmp/probe/sample.json -out /tmp/probe/sample.enc -pass file:/tmp/k.bin
-            openssl pkeyutl -encrypt -pubin -inkey .github/claude-pub.pem -in /tmp/k.bin -out /tmp/probe/key.enc
-            rm /tmp/probe/sample.json /tmp/k.bin
-          fi
+            openssl enc -aes-256-cbc -pbkdf2 -salt -in "$f" -out "${f%.json}.enc" -pass file:/tmp/k.bin
+            openssl pkeyutl -encrypt -pubin -inkey .github/claude-pub.pem -in /tmp/k.bin -out "${f%.json}.key"
+            rm "$f" /tmp/k.bin
+          done
       - name: Guardar resultado cifrado en rama privada-cifrada
         run: |
-          mkdir -p /tmp/out && cp /tmp/count.json /tmp/out/ && cp /tmp/probe/*.enc /tmp/out/ 2>/dev/null || true
+          mkdir -p /tmp/out && cp /tmp/count.json /tmp/out/ && cp /tmp/probe/*.enc /tmp/probe/*.key /tmp/out/ 2>/dev/null || true
           git config user.name "github-actions[bot]"; git config user.email "41898+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan muestra-cifrada && git rm -rqf . && cp /tmp/out/* . && git add -A && git commit -qm "Muestra cifrada" && git push -fq origin muestra-cifrada
