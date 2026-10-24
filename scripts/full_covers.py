@@ -36,7 +36,9 @@ def dhash(path):
     return tuple(px[r * 9 + c] > px[r * 9 + c + 1] for r in range(8) for c in range(8))
 
 items = json.loads(Path('catalog.json').read_text()); extras = Path('gallery-extra/images')
-todo = [p for p in items if p.get('sectionSlug') == 'ropa-casual' and p.get('cover') and not p.get('team') and p.get('status') != 'hidden']
+manual = set(json.loads(Path('portadas.json').read_text())) if Path('portadas.json').exists() else set()
+# Nunca se tocan las portadas que Bryan eligió a mano.
+todo = [p for p in items if p.get('sectionSlug') == 'ropa-casual' and p.get('cover') and not p.get('team') and p.get('status') != 'hidden' and p['id'] not in manual]
 files = {p['id']: [Path('images') / p['cover']] + [extras / k for k in p.get('gallery') or []] for p in todo}
 hashes = {pid: [dhash(x) for x in fs] for pid, fs in files.items()}
 # Fotos genéricas: la misma imagen usada en 3 o más productos distintos (puños, cordones, tela).

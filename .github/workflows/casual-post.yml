@@ -1,0 +1,36 @@
+name: Ropa de marca - revisar portadas y Mujer
+on: workflow_dispatch
+permissions:
+  actions: write
+  contents: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow "transformers<5" torch --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Descargar fotos de galería
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: mkdir -p gallery-extra && gh release download gallery-photos --pattern gallery-extra.tar.gz --dir /tmp --clobber && tar -xzf /tmp/gallery-extra.tar.gz -C gallery-extra
+      - name: Portadas de prenda completa y fotos con mujer
+        env:
+          APPLY: 'true'
+        run: |
+          python scripts/full_covers.py 2> /dev/null || true
+          python scripts/women_photos.py 2> /dev/null || true
+      - name: Guardar y publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name catalog-bot; git config user.email catalog-bot@users.noreply.github.com
+          git add catalog.json images full-covers.json women-photos.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -qm "Ropa de marca: portadas y Mujer tras la actualización" && git pull --rebase -q && git push -q)
+          gh workflow run catalog-overrides.yml --ref main

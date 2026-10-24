@@ -104,4 +104,23 @@ jobs:
         run: |
           remaining=$(python -c "import json;print(json.load(open('casual-result.json'))['remaining'])")
           added=$(python -c "import json;print(json.load(open('casual-result.json'))['added'])")
-          if [ "$remaining" != 0 ]; then gh workflow run casual-import.yml --ref main -f continue=true; fi
+          if [ "$remaining" != 0 ]; then gh workflow run casual-import.yml --ref main -f continue=true; exit 0; fi
+          # Terminó esta fuente: sigue con la próxima de la cola; al final, revisión de portadas y de Mujer.
+          next=$(python - <<'PY2'
+          import json
+          c = json.load(open('casual-control.json'))
+          cola = c.get('cola') or []
+          if cola:
+              c['fuente'] = cola.pop(0); c['cola'] = cola; print('fuente')
+          elif c.get('post'):
+              c['post'] = False; print('post')
+          else:
+              print('fin')
+          json.dump(c, open('casual-control.json', 'w'))
+          PY2
+          )
+          if [ "$next" != fin ]; then
+            git add casual-control.json && git commit -qm "Ropa de marca: siguiente paso de la actualización" && git pull --rebase -q && git push -q
+          fi
+          if [ "$next" = fuente ]; then gh workflow run casual-import.yml --ref main -f continue=true; fi
+          if [ "$next" = post ]; then gh workflow run casual-post.yml --ref main; fi
