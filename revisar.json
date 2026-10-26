@@ -1,5 +1,101 @@
 [
   {
+    "id": "19545",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19096",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19025",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19024",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19023",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19022",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19021",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19020",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19019",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19018",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19017",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19016",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19015",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19014",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19013",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19012",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19011",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19010",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19009",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19008",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19007",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "19006",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "18483",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "17271",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
     "id": "12314",
     "reason": "Categoría o identidad no confirmada"
   },
@@ -258,33 +354,5 @@
   {
     "id": "12428",
     "reason": "Categoría o identidad no confirmada"
-  },
-  {
-    "id": "12430",
-    "reason": "Modelo de calzado duplicado"
-  },
-  {
-    "id": "12435",
-    "reason": "Modelo de calzado duplicado"
-  },
-  {
-    "id": "12437",
-    "reason": "Modelo de calzado duplicado"
-  },
-  {
-    "id": "12438",
-    "reason": "Modelo de calzado no identificado"
-  },
-  {
-    "id": "12440",
-    "reason": "Modelo de calzado no identificado"
-  },
-  {
-    "id": "12441",
-    "reason": "Modelo de calzado no identificado"
-  },
-  {
-    "id": "12442",
-    "reason": "Modelo de calzado no identificado"
   }
 ]

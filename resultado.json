@@ -1,127 +1,191 @@
 {
-  "products": 12438,
+  "products": 19682,
   "sources": [
     {
       "source": 1,
-      "group": "footwear",
+      "group": "catalog",
       "added": 0,
       "duplicates": 0,
-      "photo_rejected": 0,
-      "read_errors": 0,
-      "albums_checked": 0,
-      "models_from_categories": 0,
-      "status": "no_readable_albums",
-      "albums_discovered": 0,
-      "batch_start": 0,
-      "batch_end": 0,
-      "remaining_albums": 0,
-      "listing_pages_checked": 4
+      "unrecognized": 6,
+      "photo_rejected": 2,
+      "read_errors": 144,
+      "albums_checked": 8,
+      "listing_pages_checked": 8,
+      "status": "readable_partial",
+      "error_types": {
+        "fetch": 144
+      },
+      "albums_discovered": 531
     },
     {
       "source": 2,
-      "group": "footwear",
-      "added": 9,
+      "group": "catalog",
+      "added": 0,
       "duplicates": 0,
-      "photo_rejected": 7,
-      "read_errors": 3,
-      "albums_checked": 16,
-      "models_from_categories": 3,
-      "status": "batch_complete",
+      "unrecognized": 8,
+      "photo_rejected": 0,
+      "read_errors": 144,
+      "albums_checked": 8,
+      "listing_pages_checked": 8,
+      "status": "readable_partial",
       "error_types": {
-        "fetch": 3
+        "fetch": 144
       },
-      "albums_discovered": 40,
-      "batch_start": 32,
-      "batch_end": 40,
-      "remaining_albums": 0,
-      "listing_pages_checked": 8
+      "albums_discovered": 458
     },
     {
       "source": 3,
-      "group": "footwear",
+      "group": "catalog",
       "added": 0,
       "duplicates": 0,
+      "unrecognized": 1,
       "photo_rejected": 0,
-      "read_errors": 3,
-      "albums_checked": 0,
-      "models_from_categories": 0,
-      "status": "read_failed",
+      "read_errors": 127,
+      "albums_checked": 8,
+      "listing_pages_checked": 8,
+      "status": "readable_partial",
       "error_types": {
-        "certificate": 3
+        "fetch": 127
       },
-      "albums_discovered": 0,
-      "batch_start": 0,
-      "batch_end": 0,
-      "remaining_albums": 0,
-      "listing_pages_checked": 3
+      "albums_discovered": 612
+    },
+    {
+      "source": 4,
+      "group": "catalog",
+      "added": 0,
+      "duplicates": 0,
+      "unrecognized": 8,
+      "photo_rejected": 0,
+      "read_errors": 144,
+      "albums_checked": 8,
+      "listing_pages_checked": 8,
+      "status": "readable_partial",
+      "error_types": {
+        "fetch": 144
+      },
+      "albums_discovered": 573
+    },
+    {
+      "source": 5,
+      "group": "catalog",
+      "added": 0,
+      "duplicates": 2,
+      "unrecognized": 5,
+      "photo_rejected": 0,
+      "read_errors": 140,
+      "albums_checked": 7,
+      "listing_pages_checked": 8,
+      "status": "readable_partial",
+      "error_types": {
+        "fetch": 140
+      },
+      "albums_discovered": 408
+    },
+    {
+      "source": 6,
+      "group": "catalog",
+      "added": 0,
+      "duplicates": 0,
+      "unrecognized": 8,
+      "photo_rejected": 0,
+      "read_errors": 130,
+      "albums_checked": 8,
+      "listing_pages_checked": 8,
+      "status": "readable_partial",
+      "error_types": {
+        "fetch": 130
+      },
+      "albums_discovered": 542
+    },
+    {
+      "source": 7,
+      "group": "catalog",
+      "added": 0,
+      "duplicates": 0,
+      "unrecognized": 8,
+      "photo_rejected": 0,
+      "read_errors": 124,
+      "albums_checked": 8,
+      "listing_pages_checked": 8,
+      "status": "readable_partial",
+      "error_types": {
+        "fetch": 124
+      },
+      "albums_discovered": 467
     }
   ],
-  "added": 9,
-  "footwear_products": 10,
+  "added": 0,
+  "footwear_products": 3191,
   "privacy": {
-    "removed": 0,
+    "removed": 12,
     "remaining": 0
   },
   "organization": {
     "moved_from_others": {},
-    "review": 72,
+    "review": 89,
     "sections_visible": {
-      "calzado": 3,
-      "ropa-casual": 195,
-      "formula-1": 1,
-      "nba": 869,
-      "futbol": 5176,
-      "selecciones": 1518,
-      "accesorios": 23
+      "ropa-casual": 2198,
+      "accesorios": 37,
+      "selecciones": 2320,
+      "nhl": 59,
+      "futbol": 7937,
+      "nfl": 206,
+      "formula-1": 351,
+      "calzado": 3180,
+      "nba": 1106
     },
     "categories_visible": {
-      "calzado": 3,
-      "shorts": 93,
-      "chaquetas": 480,
-      "camisetas": 6733,
-      "conjuntos": 431,
-      "buzos": 22,
-      "accesorios": 23
+      "conjuntos": 846,
+      "chaquetas": 1297,
+      "shorts": 611,
+      "buzos": 484,
+      "camisetas": 10939,
+      "accesorios": 37,
+      "calzado": 3180
     },
     "sections_total": {
-      "revision": 72,
-      "calzado": 3,
-      "ropa-casual": 305,
-      "futbol": 8360,
-      "formula-1": 4,
-      "nba": 1086,
-      "selecciones": 2573,
-      "accesorios": 35
+      "ropa-casual": 2357,
+      "revision": 89,
+      "accesorios": 38,
+      "selecciones": 2664,
+      "nhl": 71,
+      "futbol": 9557,
+      "nfl": 223,
+      "formula-1": 353,
+      "calzado": 3191,
+      "nba": 1139
     },
     "categories_total": {
-      "calzado": 10,
-      "shorts": 129,
-      "chaquetas": 796,
-      "camisetas": 10822,
-      "conjuntos": 553,
-      "buzos": 28,
-      "accesorios": 35,
+      "conjuntos": 985,
+      "chaquetas": 1410,
+      "shorts": 650,
+      "buzos": 548,
+      "camisetas": 12771,
+      "faldas": 10,
+      "accesorios": 38,
+      "bolsos": 14,
+      "calzado": 3191,
       "ropa-hombre": 24,
       "otros": 41
     }
   },
   "examples": [
-    "Adidas Superstar 3.0",
-    "Nike Blazer",
-    "New Balance"
+    "Nike Vapor Unisex Football Socks",
+    "Adidas Football Kit adiSock Team Socks",
+    "Adidas 19.1 MD Copa TF",
+    "Adidas 19.1 MD Copa IN",
+    "Nike Lunar Gato II MD 5 IC",
+    "Nike Lunar Gato II MD IC",
+    "Nike Lunar Gato II MD IC",
+    "Nike Lunar Gato II MD IC",
+    "Nike Lunar Gato II MD 5 IC",
+    "Nike Lunar Gato II MD 5 IC"
   ],
   "photo_screening": {
-    "screened": 24,
-    "rejected": 15
+    "screened": 0,
+    "rejected": 0
   },
   "photo_content_privacy": "ocr_screened_not_visual_guarantee",
-  "photo_diagnostics": {
-    "original_attribute": 37,
-    "download_image": 63,
-    "ocr_attempted": 24,
-    "ocr_passed": 9,
-    "ocr_failed": 15
-  },
-  "inspected_model_examples": [],
-  "footwear_hidden_after_review": 7
+  "photo_diagnostics": {},
+  "inspected_model_examples": []
 }
