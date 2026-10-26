@@ -15,38 +15,35 @@
   },
   {
    "source": 2,
-   "added": 16,
-   "skipped": {
-    "no_title": 3
-   },
+   "added": 0,
+   "skipped": {},
    "pages": [
     1,
     1
    ],
-   "pending_before": 19,
-   "kind": "category",
+   "pending_before": 0,
+   "kind": null,
    "pending_after": 0,
    "status": "ok"
   },
   {
    "source": 3,
-   "added": 41,
+   "added": 17,
    "skipped": {
-    "duplicate_photo": 17,
-    "no_title": 2
+    "duplicate_photo": 4
    },
    "pages": [
     44,
     44
    ],
-   "pending_before": 81,
+   "pending_before": 21,
    "kind": "album",
-   "pending_after": 21,
+   "pending_after": 0,
    "status": "ok"
   }
  ],
- "added": 57,
- "remaining": 21,
- "footwear_products": 3248,
- "size_bytes": 570969028
+ "added": 17,
+ "remaining": 0,
+ "footwear_products": 3265,
+ "size_bytes": 571192808
 }
