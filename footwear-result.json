@@ -28,22 +28,22 @@
   },
   {
    "source": 3,
-   "added": 17,
+   "added": 6,
    "skipped": {
-    "duplicate_photo": 4
+    "duplicate_photo": 2
    },
    "pages": [
     44,
     44
    ],
-   "pending_before": 21,
+   "pending_before": 8,
    "kind": "album",
    "pending_after": 0,
    "status": "ok"
   }
  ],
- "added": 17,
+ "added": 6,
  "remaining": 0,
- "footwear_products": 3265,
- "size_bytes": 571192808
+ "footwear_products": 3271,
+ "size_bytes": 571495634
 }
