@@ -65,7 +65,7 @@ jobs:
           else
             git add catalog.json images footwear-seen.json footwear-result.json
           fi
-          git diff --cached --quiet || (git commit -m 'Cargar calzado por tanda' && git pull --rebase -q && git push)
+          git diff --cached --quiet || (git commit -m 'Cargar calzado por tanda' && git checkout -- . && git pull --rebase -q && git push)
       - name: Publicar fotos de galería
         if: steps.mode.outputs.pilot != 'true'
         env:
