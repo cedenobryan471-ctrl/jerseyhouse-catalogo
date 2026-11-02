@@ -215,6 +215,7 @@ def discover_by_model(site, per_model=10):
             b = brand_of(translate(name))
             title = b if b != 'Otras marcas' else None
         if not title: continue
+        title = re.sub(r'^(Ugg)\s+\d+$', r'\1', title, flags=re.I)
         try: page = site.page(curl)
         except Exception: continue
         albums = list(links(page, curl, site.host, r'/albums/(\d+)').items())[:per_model]
