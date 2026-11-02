@@ -4,7 +4,8 @@ import unicodedata
 
 BRANDS = ['New Balance', 'On Running', 'Under Armour', 'Loro Piana', 'Nike', 'Adidas', 'Puma', 'Asics',
           'Mizuno', 'Jordan', 'Converse', 'Vans', 'Reebok', 'Umbro', 'Joma', 'Lotto', 'Skechers',
-          'Salomon', 'Timberland', 'Norda', 'Kailas', 'Hoka', 'Fila', 'Saucony', 'Brooks', 'Keen']
+          'Salomon', 'Timberland', 'Norda', 'Kailas', 'Hoka', 'Fila', 'Saucony', 'Brooks', 'Keen',
+          'Balenciaga', 'Gucci', 'Louis Vuitton', 'Yeezy', 'Bape', 'The North Face', 'Golden Goose', 'Lanvin', 'Off-White', 'Ugg', 'Premiata']
 FOOTBALL_MODELS = re.compile(
     r'\b(?:mercurial|phantom|tiempo|predator|copa\s+mundial|\bcopa\b|future|morelia|ultra\s+match|'
     r'cleats?|football\s+boots?|soccer\s+(?:shoes?|boots?)|fg|ag|tf|sg|ic|futsal|tacos|guayos)\b|足球鞋|钉鞋',
@@ -14,6 +15,11 @@ SIZE_RANGE = re.compile(r'(?<![\d.])((?:[2-4]\d|50)(?:\.5)?)\s*[-–~至]\s*((?:
 
 # Chinese nicknames -> brand/model. Longest keys first so 阿迪马拉松 wins over 阿迪.
 NICKNAMES = [
+    ('小空军', 'Nike Court Vision'), ('空军', 'Nike Air Force 1'), ('巴黎世家', 'Balenciaga'), ('路易威登', 'Louis Vuitton'),
+    ('古驰', 'Gucci'), ('椰子', 'Yeezy'), ('洞洞鞋', 'Zuecos'), ('猿人头', 'Bape'), ('北面', 'The North Face'),
+    ('三叶草', 'Adidas Originals'), ('爆米花', 'Ultraboost'), ('登月', 'Nike Pegasus'), ('飞马', ''), ('怪兽', 'Cloudmonster'),
+    ('小脏鞋', 'Golden Goose'), ('欧文斯', ''), ('浪凡', ''), ('露露乐蒙', ''), ('普瑞米亚达', ''), ('新配色', ''),
+    ('气垫', 'Air Max'), ('乔', 'Jordan '),
     ('阿迪马拉松', 'Adidas Marathon'), ('阿迪达斯', 'Adidas'), ('贝壳头', 'Adidas Superstar'),
     ('阿尔法', 'Adidas Alphabounce'), ('空军一号', 'Nike Air Force 1'), ('开拓者', 'Nike Blazer'),
     ('登月飞马', 'Nike Pegasus'), ('新百伦', 'New Balance'), ('天伯伦', 'Timberland'),
@@ -31,6 +37,7 @@ def translate(title):
     out = str(title or '')
     for zh, latin in NICKNAMES:
         out = out.replace(zh, ' ' + latin + ' ')
+    out = re.sub(r'[一二三四五六七八九十]+代|代', ' ', out)
     out = SUPPLIER_WORDS.sub(' ', out)
     out = CHINESE.sub(' ', out)
     return re.sub(r'\s+', ' ', out).strip(' -_,;.')

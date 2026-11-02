@@ -50,6 +50,7 @@ class Site:
         self.url, self.host, self.root = url, o.netloc, f'{o.scheme}://{o.netloc}'
         self.verify = True
         self.names = {}
+        self.titles = {}
         self.store_words = set()
         # Si la fuente tiene candado, la clave viaja solo en la cookie de esa página (nunca se guarda).
         self.cookies = {'indexlockcode': os.environ['CLAVE'].strip()} if os.environ.get('CLAVE', '').strip() else {}
@@ -132,7 +133,7 @@ def shoe_title(raw):
         t = brand + ' ' + re.sub(r'\s+', ' ', t).strip()
     t = re.sub(r'\s+', ' ', t).strip(' -_,;.')
     if brand != 'Otras marcas':
-        return t if len(t) > len(brand) + 2 else None
+        return t if len(t) >= len(brand) + 2 else None
     return t if re.search(r'[A-Za-z]{3}', t) else None
 
 
@@ -202,7 +203,35 @@ def category_items(site, page):
     return out
 
 
+def discover_by_model(site, per_model=10):
+    """Fuente organizada por modelo (categorías): hasta `per_model` álbumes (colores) por modelo, intercalados."""
+    first = site.page(site.url); site.learn_store(first)
+    cats = links(first, site.url, site.host, r'/categories/(\d+)')
+    groups = []
+    for cid, (curl, a) in cats.items():
+        name = re.sub(r'\s+\d+$', '', a.get_text(' ', strip=True))
+        title = shoe_title(name)
+        if not title:
+            b = brand_of(translate(name))
+            title = b if b != 'Otras marcas' else None
+        if not title: continue
+        try: page = site.page(curl)
+        except Exception: continue
+        albums = list(links(page, curl, site.host, r'/albums/(\d+)').items())[:per_model]
+        group = []
+        for aid, (aurl, _) in albums:
+            site.names[aid] = name; site.titles[aid] = title
+            group.append(('album', aid, aurl))
+        groups.append(group)
+    items = []
+    for i in range(per_model):
+        items += [g[i] for g in groups if i < len(g)]
+    site.pages_total = site.pages_read = len(groups)
+    return items
+
+
 def discover(site):
+    if os.environ.get('FUENTE_CALZADO', '').strip(): return discover_by_model(site)
     first = site.page(site.url)
     site.learn_store(first)
     albums = album_items(site, first)
@@ -229,6 +258,7 @@ def process(site, item):
     if kind == 'album':
         h = page.select_one('.showalbumheader__gallerytitle') or page.select_one('h1')
         raw = h.get_text(' ', strip=True) if h else ''
+        if key in site.names: raw = site.names[key] + ' ' + raw
         urls = album_originals(page, url)[:10]
         cover_url = seller_cover(page, url)
         if cover_url and cover_url in urls: urls.remove(cover_url)
@@ -243,7 +273,7 @@ def process(site, item):
             try: urls += album_originals(site.page(aurl), aurl)[:1]
             except Exception: continue
         images = download(site, urls, url); seller = None
-    title = shoe_title(raw)
+    title = site.titles.get(key) if kind == 'album' and key in site.titles else shoe_title(raw)
     if title:
         low = title.lower()
         for w in site.store_words:

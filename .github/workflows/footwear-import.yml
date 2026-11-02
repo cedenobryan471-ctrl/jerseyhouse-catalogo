@@ -54,7 +54,7 @@ jobs:
           FUENTE_CALZADO: ${{ secrets.FUENTE_CALZADO }}
           CLAVE: ${{ secrets.FUENTE_CALZADO_CLAVE }}
           FOOTWEAR_PILOT: ${{ steps.mode.outputs.pilot }}
-          FOOTWEAR_BATCH: '60'
+          FOOTWEAR_BATCH: '200'
         run: python scripts/footwear_import.py > /dev/null && python scripts/normalize_all.py > /dev/null
       - name: Guardar
         run: |
