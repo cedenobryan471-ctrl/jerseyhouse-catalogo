@@ -12,37 +12,9 @@
    "kind": null,
    "pending_after": 0,
    "status": "ok"
-  },
-  {
-   "source": 2,
-   "added": 0,
-   "skipped": {},
-   "pages": [
-    1,
-    1
-   ],
-   "pending_before": 0,
-   "kind": null,
-   "pending_after": 0,
-   "status": "ok"
-  },
-  {
-   "source": 3,
-   "added": 6,
-   "skipped": {
-    "duplicate_photo": 2
-   },
-   "pages": [
-    44,
-    44
-   ],
-   "pending_before": 8,
-   "kind": "album",
-   "pending_after": 0,
-   "status": "ok"
   }
  ],
- "added": 6,
+ "added": 0,
  "remaining": 0,
  "footwear_products": 3271,
  "size_bytes": 571495634
