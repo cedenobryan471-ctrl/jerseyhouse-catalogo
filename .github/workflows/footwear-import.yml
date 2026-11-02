@@ -51,6 +51,8 @@ jobs:
         env:
           CATALOG_CONFIG: ${{ secrets.CATALOG_CONFIG }}
           FOOTWEAR_SOURCES_CONFIG: ${{ secrets.FOOTWEAR_SOURCES_CONFIG }}
+          FUENTE_CALZADO: ${{ secrets.FUENTE_CALZADO }}
+          CLAVE: ${{ secrets.FUENTE_CALZADO_CLAVE }}
           FOOTWEAR_PILOT: ${{ steps.mode.outputs.pilot }}
           FOOTWEAR_BATCH: '60'
         run: python scripts/footwear_import.py > /dev/null && python scripts/normalize_all.py > /dev/null

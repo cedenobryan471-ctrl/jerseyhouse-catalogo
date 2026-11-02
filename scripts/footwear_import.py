@@ -258,7 +258,9 @@ def process(site, item):
 
 
 def main():
-    sources = json.loads(os.environ.get('FOOTWEAR_SOURCES_CONFIG') or '[]')
+    # Si existe FUENTE_CALZADO, se usa solo esa fuente (las anteriores dejan de cargarse; lo ya cargado se queda).
+    nueva = os.environ.get('FUENTE_CALZADO', '').strip()
+    sources = [{'url': nueva}] if nueva else json.loads(os.environ.get('FOOTWEAR_SOURCES_CONFIG') or '[]')
     items_all = read('catalog.json', []); progress = read('footwear-progress.json', {}); seen = set(read('footwear-seen.json', []))
     extras = Path('gallery-extra/images'); extras.mkdir(parents=True, exist_ok=True)
     pilot_dir = Path('footwear-pilot'); counter = max(int(p['id']) for p in items_all) + 1
