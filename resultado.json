@@ -1,12 +1,12 @@
 {
-  "products": 19682,
+  "products": 19770,
   "sources": [
     {
       "source": 1,
       "group": "catalog",
       "added": 0,
-      "duplicates": 0,
-      "unrecognized": 6,
+      "duplicates": 1,
+      "unrecognized": 5,
       "photo_rejected": 2,
       "read_errors": 144,
       "albums_checked": 8,
@@ -38,7 +38,7 @@
       "group": "catalog",
       "added": 0,
       "duplicates": 0,
-      "unrecognized": 1,
+      "unrecognized": 7,
       "photo_rejected": 0,
       "read_errors": 127,
       "albums_checked": 8,
@@ -47,7 +47,7 @@
       "error_types": {
         "fetch": 127
       },
-      "albums_discovered": 612
+      "albums_discovered": 613
     },
     {
       "source": 4,
@@ -70,16 +70,16 @@
       "group": "catalog",
       "added": 0,
       "duplicates": 2,
-      "unrecognized": 5,
+      "unrecognized": 6,
       "photo_rejected": 0,
-      "read_errors": 140,
-      "albums_checked": 7,
+      "read_errors": 136,
+      "albums_checked": 8,
       "listing_pages_checked": 8,
       "status": "readable_partial",
       "error_types": {
-        "fetch": 140
+        "fetch": 136
       },
-      "albums_discovered": 408
+      "albums_discovered": 312
     },
     {
       "source": 6,
@@ -95,7 +95,7 @@
       "error_types": {
         "fetch": 130
       },
-      "albums_discovered": 542
+      "albums_discovered": 546
     },
     {
       "source": 7,
@@ -115,71 +115,71 @@
     }
   ],
   "added": 0,
-  "footwear_products": 3191,
+  "footwear_products": 3265,
   "privacy": {
-    "removed": 12,
+    "removed": 7,
     "remaining": 0
   },
   "organization": {
     "moved_from_others": {},
     "review": 89,
     "sections_visible": {
-      "ropa-casual": 2198,
-      "accesorios": 37,
+      "ropa-casual": 2210,
       "selecciones": 2320,
+      "calzado": 3253,
+      "accesorios": 37,
       "nhl": 59,
-      "futbol": 7937,
+      "futbol": 7913,
       "nfl": 206,
       "formula-1": 351,
-      "calzado": 3180,
       "nba": 1106
     },
     "categories_visible": {
-      "conjuntos": 846,
-      "chaquetas": 1297,
+      "conjuntos": 847,
+      "chaquetas": 1307,
       "shorts": 611,
-      "buzos": 484,
-      "camisetas": 10939,
-      "accesorios": 37,
-      "calzado": 3180
+      "buzos": 486,
+      "calzado": 3253,
+      "camisetas": 10914,
+      "accesorios": 37
     },
     "sections_total": {
-      "ropa-casual": 2357,
+      "ropa-casual": 2370,
+      "selecciones": 2665,
+      "calzado": 3265,
       "revision": 89,
       "accesorios": 38,
-      "selecciones": 2664,
       "nhl": 71,
       "futbol": 9557,
       "nfl": 223,
       "formula-1": 353,
-      "calzado": 3191,
       "nba": 1139
     },
     "categories_total": {
-      "conjuntos": 985,
-      "chaquetas": 1410,
-      "shorts": 650,
-      "buzos": 548,
+      "conjuntos": 986,
+      "chaquetas": 1420,
+      "shorts": 651,
+      "buzos": 550,
+      "calzado": 3265,
       "camisetas": 12771,
       "faldas": 10,
       "accesorios": 38,
       "bolsos": 14,
-      "calzado": 3191,
       "ropa-hombre": 24,
       "otros": 41
     }
   },
   "examples": [
-    "Nike Vapor Unisex Football Socks",
-    "Adidas Football Kit adiSock Team Socks",
-    "Adidas 19.1 MD Copa TF",
-    "Adidas 19.1 MD Copa IN",
-    "Nike Lunar Gato II MD 5 IC",
-    "Nike Lunar Gato II MD IC",
-    "Nike Lunar Gato II MD IC",
-    "Nike Lunar Gato II MD IC",
-    "Nike Lunar Gato II MD 5 IC",
-    "Nike Lunar Gato II MD 5 IC"
+    "Adidas 27 FG Predator Elite Tongue",
+    "Adidas 27 FG Predator Elite Tongue",
+    "Puma 8 Bota alta FG FUTURE ULTIMATE TF",
+    "Adidas 27 FG Predator Elite Tongue",
+    "Nike / GX III Phantom Elite TF",
+    "Nike / GX III Phantom Elite TF",
+    "Adidas 27 FG Predator Elite Tongue",
+    "Adidas 27 FG Predator Elite Tongue",
+    "2027 FG COPA PURE II+ BOOTS",
+    "Nike MD Air Zoom Mercurial Vapor XVI Elite IC"
   ],
   "photo_screening": {
     "screened": 0,
