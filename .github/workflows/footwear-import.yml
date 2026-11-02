@@ -61,7 +61,7 @@ jobs:
           git config user.name catalog-bot
           git config user.email catalog-bot@users.noreply.github.com
           if [ "${{ steps.mode.outputs.pilot }}" = true ]; then
-            git add footwear-result.json footwear-pilot || true
+            git add footwear-result.json; [ -d footwear-pilot ] && git add footwear-pilot || true
           else
             git add catalog.json images footwear-seen.json footwear-result.json
           fi
