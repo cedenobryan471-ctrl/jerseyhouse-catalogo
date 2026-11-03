@@ -1,14 +1,13 @@
 {
- "added": 46,
+ "added": 69,
  "skipped": {
-  "ya_en_tienda": 23,
-  "equipo_desconocido": 11
+  "ya_en_tienda": 10,
+  "equipo_desconocido": 1
  },
  "by_section": {
-  "selecciones": 40,
-  "futbol": 6
+  "futbol": 69
  },
  "albums": 1037,
- "remaining": 717,
+ "remaining": 637,
  "status": "ok"
 }
