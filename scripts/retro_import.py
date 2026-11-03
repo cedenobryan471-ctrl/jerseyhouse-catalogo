@@ -15,7 +15,7 @@ from casual_photos import text_marks
 from photo_candidates import album_originals, seller_cover
 from sports_import import collect, album_raw
 from identities import identity, slug
-from retro_teams import TEAMS
+from retro_teams import TEAMS, SKIP, EXTRA
 
 PILOT = os.environ.get('RETRO_PILOT') == 'true'
 BATCH = int(os.environ.get('RETRO_BATCH', '80'))
@@ -40,25 +40,26 @@ def season_of(raw):
 
 
 def sizes_of(raw):
-    m = re.search(r'剩\s*([SMLX0-9 ]+)', raw, re.I)
+    m = re.search(r'(?:剩|有)\s*([SMLX0-9 ,，]+)', raw, re.I)
     if m:
-        found = [s for s in SCALE if re.search(r'(?<![A-Z0-9])' + s + r'(?![A-Z])', m.group(1).upper().replace(' ', '  '))]
+        found = [s for s in SCALE if re.search(r'(?<![A-Z0-9])' + s + r'(?![A-Z])', re.sub(r'[ ,，]', '  ', m.group(1).upper()))]
         if not found:  # "SM" pegado = S y M
-            found = [s for s in SCALE if s in m.group(1).upper()]
+            found = [s for s in SCALE if s in m.group(1).upper() and len(s) == 1]
         if found: return found
     return ['S', 'M', 'L', 'XL', '2XL']
 
 
 def build(raw):
+    if re.search(SKIP, raw, re.I): return None
     team = team_of(raw)
     if not team: return None
-    ident = identity(team)
+    ident = EXTRA.get(team) or identity(team)
     if not ident or not ident[0]: return None
     name, league = ident
     season = season_of(raw)
     kit = next((k for k, rx in KITS if re.search(rx, raw)), None)
     long = bool(re.search(r'长袖', raw))
-    special = bool(re.search(r'纪念|周年', raw))
+    special = bool(re.search(r'纪念|周年|特别版', raw))
     ucl = bool(re.search(r'欧冠', raw))
     parts = ['Camiseta', name, 'Retro'] + ([kit] if kit else []) + (['Champions'] if ucl else []) + \
             (['Edición especial'] if special else []) + ([season] if season else []) + (['Manga larga'] if long else [])
