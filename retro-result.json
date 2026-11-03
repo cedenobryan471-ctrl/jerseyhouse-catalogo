@@ -1,12 +1,12 @@
 {
- "added": 53,
+ "added": 48,
  "skipped": {
-  "ya_en_tienda": 27
+  "ya_en_tienda": 32
  },
  "by_section": {
-  "futbol": 53
+  "futbol": 48
  },
  "albums": 1037,
- "remaining": 157,
+ "remaining": 77,
  "status": "ok"
 }
