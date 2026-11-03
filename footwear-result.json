@@ -1,9 +1,24 @@
 {
- "sources": [],
- "added": 0,
- "remaining": 1,
- "cleaned": {
-  "hidden": 51,
-  "gallery_removed": 15
- }
+ "sources": [
+  {
+   "source": 1,
+   "added": 89,
+   "skipped": {
+    "duplicate_photo": 10,
+    "photos_rejected": 1
+   },
+   "pages": [
+    492,
+    492
+   ],
+   "pending_before": 2541,
+   "kind": "album",
+   "pending_after": 2441,
+   "status": "ok"
+  }
+ ],
+ "added": 89,
+ "remaining": 2441,
+ "footwear_products": 4260,
+ "size_bytes": 587012294
 }
