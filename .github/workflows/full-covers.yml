@@ -6,6 +6,10 @@ on:
         description: Aplicar al catálogo
         type: boolean
         default: false
+      scope:
+        type: choice
+        options: [casual, retro]
+        default: casual
 permissions:
   contents: write
 concurrency:
@@ -29,6 +33,7 @@ jobs:
       - name: Detectar
         env:
           APPLY: ${{ inputs.apply }}
+          SCOPE: ${{ inputs.scope }}
         run: python scripts/full_covers.py 2> full-covers-error.txt || true
       - name: Guardar
         run: |

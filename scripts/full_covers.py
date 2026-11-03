@@ -38,7 +38,11 @@ def dhash(path):
 items = json.loads(Path('catalog.json').read_text()); extras = Path('gallery-extra/images')
 manual = set(json.loads(Path('portadas.json').read_text())) if Path('portadas.json').exists() else set()
 # Nunca se tocan las portadas que Bryan eligió a mano.
-todo = [p for p in items if p.get('sectionSlug') == 'ropa-casual' and p.get('cover') and not p.get('team') and p.get('status') != 'hidden' and p['id'] not in manual]
+SCOPE = os.environ.get('SCOPE', 'casual')
+if SCOPE == 'retro':  # camisetas retro nuevas (desde el id 22560)
+    todo = [p for p in items if p.get('version') == 'retro' and int(p['id']) >= 22560 and p.get('cover') and p.get('status') != 'hidden' and p['id'] not in manual]
+else:
+    todo = [p for p in items if p.get('sectionSlug') == 'ropa-casual' and p.get('cover') and not p.get('team') and p.get('status') != 'hidden' and p['id'] not in manual]
 files = {p['id']: [Path('images') / p['cover']] + [extras / k for k in p.get('gallery') or []] for p in todo}
 hashes = {pid: [dhash(x) for x in fs] for pid, fs in files.items()}
 # Fotos genéricas: la misma imagen usada en 3 o más productos distintos (puños, cordones, tela).
