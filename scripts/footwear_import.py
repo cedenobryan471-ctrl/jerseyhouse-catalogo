@@ -159,7 +159,49 @@ def choose(images, seller_index=None):
         approved.append(i)
     if not approved: return []
     cover = seller_index if seller_index in approved else max(approved, key=lambda i: background_score(images[i]))
-    return [cover] + [i for i in approved if i != cover][:MAX_PHOTOS - 1]
+    order = [cover] + [i for i in approved if i != cover]
+    if os.environ.get('FUENTE_CALZADO', '').strip():
+        clean = []
+        for i in order:
+            if not has_chinese(images[i]): clean.append(i)
+            if len(clean) >= MAX_PHOTOS: break
+        return clean
+    return order[:MAX_PHOTOS]
+
+
+def has_chinese(im):
+    """True si la foto tiene cualquier letra china (los números sí se permiten). Si el OCR falla, se detiene."""
+    from casual_photos import text_marks
+    chinese, _ = text_marks(im)
+    return chinese >= 1
+
+
+def clean_chinese_once(items_all, first_id=19781):
+    """Una sola vez: oculta los tenis nuevos con letras chinas en la portada y quita fotos de galería con chino."""
+    flag = Path('footwear-chinese-cleaned.json')
+    if flag.exists(): return False
+    states = read('estado.json', {}); extras = Path('gallery-extra/images'); hidden = removed = 0
+    for p in items_all:
+        if p.get('categorySlug') != 'calzado' or int(p['id']) < first_id or states.get(p['id']) == 'hidden': continue
+        try:
+            with Image.open(Path('images') / p['cover']) as im:
+                if has_chinese(im):
+                    states[p['id']] = 'hidden'; hidden += 1; continue
+        except FileNotFoundError:
+            continue
+        keep = []
+        for key in p.get('gallery') or []:
+            f = extras / key
+            try:
+                with Image.open(f) as im: bad = has_chinese(im)
+            except FileNotFoundError:
+                bad = False
+            if bad: removed += 1
+            else: keep.append(key)
+        p['gallery'] = keep
+    Path('estado.json').write_text(json.dumps(states, ensure_ascii=False, separators=(',', ':')))
+    flag.write_text(json.dumps({'hidden': hidden, 'gallery_removed': removed}))
+    return True
 
 
 def ahash(im):
@@ -296,6 +338,10 @@ def main():
     extras = Path('gallery-extra/images'); extras.mkdir(parents=True, exist_ok=True)
     pilot_dir = Path('footwear-pilot'); counter = max(int(p['id']) for p in items_all) + 1
     report = {'sources': [], 'added': 0}
+    if not PILOT and os.environ.get('FUENTE_CALZADO', '').strip() and clean_chinese_once(items_all):
+        Path('catalog.json').write_text(json.dumps(items_all, ensure_ascii=False, separators=(',', ':')))
+        report['remaining'] = 1; report['cleaned'] = json.loads(Path('footwear-chinese-cleaned.json').read_text())
+        Path('footwear-result.json').write_text(json.dumps(report, ensure_ascii=False, indent=1)); return
     size_now = sum(p.stat().st_size for p in Path('images').glob('*.webp'))
     for number, source in enumerate(sources, 1):
         site = Site(source['url']); skey = opaque(source['url'])

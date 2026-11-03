@@ -29,7 +29,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: sudo apt-get update -q && sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
-      - run: pip install requests pillow beautifulsoup4
+      - run: pip install requests pillow beautifulsoup4 numpy rapidocr_onnxruntime
       - name: Modo
         id: mode
         run: |
@@ -63,7 +63,7 @@ jobs:
           if [ "${{ steps.mode.outputs.pilot }}" = true ]; then
             git add footwear-result.json; [ -d footwear-pilot ] && git add footwear-pilot || true
           else
-            git add catalog.json images footwear-seen.json footwear-result.json
+            git add catalog.json images footwear-seen.json footwear-result.json estado.json; [ -f footwear-chinese-cleaned.json ] && git add footwear-chinese-cleaned.json || true
           fi
           git diff --cached --quiet || (git commit -m 'Cargar calzado por tanda' && git checkout -- . && git pull --rebase -q && git push)
       - name: Publicar fotos de galería
