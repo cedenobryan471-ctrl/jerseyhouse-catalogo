@@ -2,23 +2,23 @@
  "sources": [
   {
    "source": 1,
-   "added": 73,
+   "added": 55,
    "skipped": {
-    "duplicate_photo": 16,
-    "photos_rejected": 11
+    "duplicate_photo": 17,
+    "photos_rejected": 28
    },
    "pages": [
     492,
     492
    ],
-   "pending_before": 938,
+   "pending_before": 838,
    "kind": "album",
-   "pending_after": 838,
+   "pending_after": 738,
    "status": "ok"
   }
  ],
- "added": 73,
- "remaining": 838,
- "footwear_products": 5442,
- "size_bytes": 606174736
+ "added": 55,
+ "remaining": 738,
+ "footwear_products": 5497,
+ "size_bytes": 607536628
 }
