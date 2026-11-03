@@ -10,11 +10,12 @@ if not url:
 site = Site(url)
 albums = collect(site, 'probe')
 random.seed(7)
-sample = random.sample(albums, min(150, len(albums)))
+full = os.environ.get('PROBE_FULL') == '1'
+sample = albums if full else random.sample(albums, min(150, len(albums)))
 rows = []
-for aid, aurl, ctx in sample[:150]:
+for aid, aurl, ctx in (sample if full else sample[:150]):
     raw = ''
-    if len(rows) < 40:
+    if full or len(rows) < 40:
         try: raw = album_raw(site.page(aurl))
         except Exception: raw = ''
     rows.append({'ctx': ctx[:120], 'raw': raw[:200]})

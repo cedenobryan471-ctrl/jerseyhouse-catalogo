@@ -7,12 +7,15 @@ on:
         type: choice
         options: [FUENTE_NUEVA, FUENTE_NUEVA_2, FUENTE_CALZADO, FUENTE_RETRO]
         default: FUENTE_NUEVA_2
+      completo:
+        type: boolean
+        default: false
 permissions:
   contents: write
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,6 +26,7 @@ jobs:
         env:
           FUENTE_NUEVA: ${{ secrets[inputs.secreto] }}
           FUENTE: ${{ secrets[inputs.secreto] }}
+          PROBE_FULL: ${{ inputs.completo && '1' || '0' }}
           CLAVE: ${{ secrets[format('{0}_CLAVE', inputs.secreto)] || secrets[format('{0}_CONTRASENA', inputs.secreto)] || secrets[format('{0}_CONTRASEÑA', inputs.secreto)] }}
         run: |
           mkdir -p /tmp/probe
