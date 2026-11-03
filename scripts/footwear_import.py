@@ -32,7 +32,9 @@ warnings.filterwarnings('ignore')
 
 
 ALIASES = [(r'^\s*oma\b', 'Joma'), (r'\bmax\s?(\d{2,3})\b', 'Nike Air Max \\1'), (r'\bfree\s?metcon\s?(\d)', 'Nike Free Metcon \\1'),
-           (r'^\s*sb\b', 'Nike SB'), (r'^\s*on\b(?!\s+running)', 'On Running'), (r'^\s*cloud', 'On Running Cloud'), (r'\bhoka\b', 'Hoka')]
+           (r'^\s*sb\b', 'Nike SB'), (r'^\s*on\b(?!\s+running)', 'On Running'), (r'^\s*cloud', 'On Running Cloud'), (r'\bhoka\b', 'Hoka'),
+           (r'^\s*(phantom|mercurial|tiempo|vapor\s*1\d|superfly)', 'Nike \\1'), (r'^\s*(predator|copa|x\s*crazyfast|f50)', 'Adidas \\1'),
+           (r'^\s*(future|ultra\s*(?:match|ultimate))', 'Puma \\1'), (r'^\s*(morelia|monarcida)', 'Mizuno \\1')]
 
 
 def read(path, fallback):
