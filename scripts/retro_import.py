@@ -52,8 +52,9 @@ def sizes_of(raw):
 def build(raw):
     team = team_of(raw)
     if not team: return None
-    name, league = identity(team)
-    if not name: return None
+    ident = identity(team)
+    if not ident or not ident[0]: return None
+    name, league = ident
     season = season_of(raw)
     kit = next((k for k, rx in KITS if re.search(rx, raw)), None)
     long = bool(re.search(r'长袖', raw))

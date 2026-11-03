@@ -12,13 +12,15 @@ albums = collect(site, 'probe')
 random.seed(7)
 full = os.environ.get('PROBE_FULL') == '1'
 sample = albums if full else random.sample(albums, min(150, len(albums)))
-rows = []
-for aid, aurl, ctx in (sample if full else sample[:150]):
-    raw = ''
-    if full or len(rows) < 40:
-        try: raw = album_raw(site.page(aurl))
-        except Exception: raw = ''
-    rows.append({'ctx': ctx[:120], 'raw': raw[:200]})
+def fetch(entry):
+    aid, aurl, ctx = entry
+    try: return {'ctx': ctx[:120], 'raw': album_raw(site.page(aurl))[:200]}
+    except Exception: return {'ctx': ctx[:120], 'raw': ''}
+if full:
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=8) as pool: rows = list(pool.map(fetch, sample))
+else:
+    rows = [fetch(e) if i < 40 else {'ctx': e[2][:120], 'raw': ''} for i, e in enumerate(sample[:150])]
 os.makedirs('/tmp/probe', exist_ok=True)
 json.dump(rows, open('/tmp/probe/sample.json', 'w'), ensure_ascii=False)
 print(json.dumps({'status': 'ok', 'albums': len(albums)}))
