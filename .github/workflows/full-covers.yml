@@ -8,7 +8,7 @@ on:
         default: false
       scope:
         type: choice
-        options: [casual, retro]
+        options: [casual, retro, training]
         default: casual
 permissions:
   contents: write

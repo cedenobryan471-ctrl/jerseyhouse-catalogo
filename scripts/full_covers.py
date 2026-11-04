@@ -39,7 +39,9 @@ items = json.loads(Path('catalog.json').read_text()); extras = Path('gallery-ext
 manual = set(json.loads(Path('portadas.json').read_text())) if Path('portadas.json').exists() else set()
 # Nunca se tocan las portadas que Bryan eligió a mano.
 SCOPE = os.environ.get('SCOPE', 'casual')
-if SCOPE == 'retro':  # camisetas retro nuevas (desde el id 22560)
+if SCOPE == 'training':  # ropa de entrenamiento nueva (desde el id 23227)
+    todo = [p for p in items if p.get('version') == 'entrenamiento' and int(p['id']) >= 23227 and p.get('cover') and p.get('status') != 'hidden' and p['id'] not in manual]
+elif SCOPE == 'retro':  # camisetas retro nuevas (desde el id 22560)
     todo = [p for p in items if p.get('version') == 'retro' and int(p['id']) >= 22560 and p.get('cover') and p.get('status') != 'hidden' and p['id'] not in manual]
 else:
     todo = [p for p in items if p.get('sectionSlug') == 'ropa-casual' and p.get('cover') and not p.get('team') and p.get('status') != 'hidden' and p['id'] not in manual]
