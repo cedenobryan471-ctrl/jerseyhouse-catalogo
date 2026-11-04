@@ -1,12 +1,10 @@
 {
- "added": 109,
- "skipped": {
-  "no_reconocido": 11
- },
+ "added": 120,
+ "skipped": {},
  "by_category": {
-  "conjuntos": 109
+  "conjuntos": 120
  },
- "remaining": 3192,
+ "remaining": 3072,
  "albums": [
   3792
  ],
