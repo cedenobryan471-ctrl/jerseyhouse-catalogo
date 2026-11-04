@@ -67,7 +67,11 @@ jobs:
           else
             git add catalog.json images casual-seen.json casual-result.json; for f in casual-audience-fixed.json casual-photos-fixed.json; do [ -f "$f" ] && git add "$f"; done; true
           fi
-          git diff --cached --quiet || (git commit -m 'Cargar ropa de marca por tanda' && git pull --rebase -q && git push)
+          if ! git diff --cached --quiet; then
+            git commit -m 'Cargar ropa de marca por tanda'; git checkout -- . ; git clean -fdq -e gallery-extra || true
+            for i in 1 2 3 4; do git pull --rebase -q && git push -q && break; git rebase --abort 2>/dev/null; sleep $((i*15)); done
+            git status -sb | head -1 | grep -q ahead && exit 1 || true
+          fi
       - name: Publicar fotos de galería
         if: steps.mode.outputs.pilot != 'true'
         env:
