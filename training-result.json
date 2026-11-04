@@ -1,13 +1,13 @@
 {
- "added": 116,
+ "added": 19,
  "skipped": {
-  "fotos_con_chino": 2,
-  "no_reconocido": 2
+  "no_reconocido": 100,
+  "fotos_con_chino": 1
  },
  "by_category": {
-  "conjuntos": 116
+  "conjuntos": 19
  },
- "remaining": 200,
+ "remaining": 80,
  "albums": [
   3800
  ],
