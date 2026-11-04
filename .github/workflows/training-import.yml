@@ -53,7 +53,7 @@ jobs:
           FUENTE_A: ${{ secrets.FUENTE_A }}
           FUENTE_B: ${{ secrets.FUENTE_B }}
           TRAINING_PILOT: ${{ steps.mode.outputs.pilot }}
-          TRAINING_BATCH: '80'
+          TRAINING_BATCH: '120'
         run: |
           python scripts/training_import.py > /dev/null
           if [ "${{ steps.mode.outputs.pilot }}" != true ]; then python scripts/normalize_all.py > /dev/null; fi
