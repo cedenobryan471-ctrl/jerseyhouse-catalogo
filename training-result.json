@@ -1,14 +1,13 @@
 {
  "added": 110,
  "skipped": {
-  "fotos_con_chino": 5,
-  "no_reconocido": 5
+  "no_reconocido": 9,
+  "fotos_con_chino": 1
  },
  "by_category": {
-  "conjuntos": 103,
-  "camisetas": 7
+  "conjuntos": 110
  },
- "remaining": 1160,
+ "remaining": 1040,
  "albums": [
   3800
  ],
