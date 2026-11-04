@@ -5,7 +5,7 @@ on:
       secreto:
         description: Secreto con la dirección de la fuente
         type: choice
-        options: [FUENTE_NUEVA, FUENTE_NUEVA_2, FUENTE_CALZADO, FUENTE_RETRO]
+        options: [FUENTE_NUEVA, FUENTE_NUEVA_2, FUENTE_CALZADO, FUENTE_RETRO, FUENTE_A, FUENTE_B, FUENTE_C]
         default: FUENTE_NUEVA_2
       completo:
         type: boolean
