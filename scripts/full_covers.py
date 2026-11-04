@@ -52,7 +52,15 @@ seen = {}
 for pid, hs in hashes.items():
     for h in set(x for x in hs if x):
         seen.setdefault(h, set()).add(pid)
-scores = {pid: full_scores(fs) for pid, fs in files.items()}
+if SCOPE in ('training', 'retro'):
+    # Rápido: primero solo la portada (en grupos); la galería solo si la portada parece un acercamiento.
+    ids = list(files); cover_sc = {}
+    for i in range(0, len(ids), 32):
+        chunk = ids[i:i + 32]
+        for pid, sc in zip(chunk, full_scores([files[x][0] for x in chunk])): cover_sc[pid] = sc
+    scores = {pid: ([cover_sc[pid]] + [1.0] * (len(fs) - 1)) if cover_sc[pid] >= 0.5 else full_scores(fs) for pid, fs in files.items()}
+else:
+    scores = {pid: full_scores(fs) for pid, fs in files.items()}
 by_hash = {}
 for pid, hs in hashes.items():
     for h, sc in zip(hs, scores[pid]):
