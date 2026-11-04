@@ -10,7 +10,8 @@ from transformers import CLIPModel, CLIPProcessor
 APPLY = os.environ.get('APPLY') == 'true'
 SET = ['a photo of a sports shirt together with shorts', 'a photo of a tracksuit jacket together with long pants',
        'a photo of a polo shirt together with pants', 'a photo of a sleeveless vest together with shorts']
-SINGLE = ['a photo of a single t-shirt alone', 'a photo of a single jacket alone', 'a close-up photo of a shirt collar or logo']
+SINGLE = ['a photo of a single t-shirt alone with no shorts', 'a photo of a single polo shirt alone', 'a photo of a sleeveless vest alone',
+          'a photo of a man wearing a shirt', 'a photo of shorts alone', 'a close-up photo of a shirt collar or logo']
 model = CLIPModel.from_pretrained('openai/clip-vit-base-patch32').eval()
 proc = CLIPProcessor.from_pretrained('openai/clip-vit-base-patch32')
 with torch.no_grad():
@@ -18,9 +19,10 @@ with torch.no_grad():
 
 items = json.loads(Path('catalog.json').read_text())
 states = json.loads(Path('estado.json').read_text())
-todo = [p for p in items if p.get('categorySlug') == 'camisetas' and p.get('cover') and states.get(p['id']) != 'hidden'
+todo = [p for p in items if p.get('categorySlug') == 'camisetas' and p.get('team') and p.get('cover') and states.get(p['id']) != 'hidden'
         and (p.get('version') == 'entrenamiento' or re.match(r'Polo\b', p['title']))]
-moved = {}
+moved = {}; scores = {}
+THRESHOLD = float(os.environ.get('THRESHOLD', '0.8'))
 for i in range(0, len(todo), 32):
     chunk = todo[i:i + 32]; ims = []
     for p in chunk:
@@ -31,7 +33,8 @@ for i in range(0, len(todo), 32):
         prob = (100 * f @ t.T).softmax(dim=-1)
     for p, pr in zip(chunk, prob):
         score = float(pr[:len(SET)].sum())
-        if score < 0.7: continue
+        scores[p['id']] = round(score, 3)
+        if score < THRESHOLD: continue
         old = p['title']
         new = re.sub(r'^Camiseta de entrenamiento', 'Conjunto de entrenamiento', old)
         new = re.sub(r'^Polo\b', 'Conjunto polo', new)
@@ -45,4 +48,4 @@ if APPLY:
     Path('sets-moved.json').write_text(json.dumps(prev | moved, ensure_ascii=False))
     Path('catalog.json').write_text(json.dumps(items, ensure_ascii=False, separators=(',', ':')))
 else:
-    Path('sets-preview.json').write_text(json.dumps(sorted(moved)))
+    Path('sets-preview.json').write_text(json.dumps(scores))
