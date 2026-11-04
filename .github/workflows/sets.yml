@@ -1,0 +1,30 @@
+name: Camisetas que son conjuntos
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  sets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow "transformers<5" torch --extra-index-url https://download.pytorch.org/whl/cpu
+      - env:
+          APPLY: ${{ inputs.apply }}
+        run: python scripts/set_detect.py
+      - run: |
+          git config user.name catalog-bot; git config user.email catalog-bot@users.noreply.github.com
+          git add sets-result.json; [ -f sets-preview.json ] && git add sets-preview.json || true
+          if [ "${{ inputs.apply }}" = true ]; then git add catalog.json sets-moved.json; fi
+          git diff --cached --quiet || (git commit -qm "Camisetas que son conjuntos" && for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 20; done)
