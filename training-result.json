@@ -1,14 +1,13 @@
 {
- "added": 103,
+ "added": 115,
  "skipped": {
-  "fotos_con_chino": 5,
-  "no_reconocido": 12
+  "fotos_con_chino": 1,
+  "no_reconocido": 4
  },
  "by_category": {
-  "conjuntos": 4,
-  "chaquetas": 99
+  "chaquetas": 115
  },
- "remaining": 1992,
+ "remaining": 1872,
  "albums": [
   3792
  ],
