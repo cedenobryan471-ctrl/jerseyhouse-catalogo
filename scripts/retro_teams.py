@@ -1,7 +1,7 @@
 """Nombres de equipos en chino -> nombre que reconoce identities.identity."""
 TEAMS = {
     # Inglaterra / Escocia / Gales / Irlanda
-    '曼联': 'Manchester United', '曼彻斯特联': 'Manchester United', '曼城': 'Manchester City', '利物浦': 'Liverpool',
+    '曼联': 'Manchester United', '曼彻斯特联': 'Manchester United', '曼城': 'Manchester City', '利物浦': 'Liverpool', '利物': 'Liverpool', '克鲁塞罗': 'Cruzeiro', '乔丹巴黎': 'PSG',
     '纽卡斯尔联': 'Newcastle United', '纽卡斯尔': 'Newcastle United', '阿森纳': 'Arsenal', '切尔西': 'Chelsea', '热刺': 'Tottenham',
     '西汉姆联': 'West Ham United', '阿斯顿维拉': 'Aston Villa', '埃弗顿': 'Everton', '利兹联': 'Leeds United',
     '凯尔特人': 'Celtic', '流浪者': 'Rangers', '科克城': 'Cork City', '德里城': 'Derry City',
