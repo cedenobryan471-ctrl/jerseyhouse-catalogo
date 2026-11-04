@@ -50,7 +50,7 @@ def garment(ctx, raw):
     t = ctx + ' ' + raw
     if re.search(r'尺寸|尺码|NBA|光板', t): return None
     hood = bool(re.search(r'帽子|连帽', t))
-    if re.search(r'POLO', raw, re.I): return 'camisetas', 'Polo'
+    if re.search(r'POLO', raw, re.I): return 'conjuntos', 'Conjunto polo'
     if re.search(r'棉衣', t): return 'chaquetas', 'Chaqueta acolchada'
     if re.search(r'风衣', t): return 'chaquetas', 'Rompevientos'
     if re.search(r'背心', t): return 'conjuntos', 'Conjunto de esqueleto'

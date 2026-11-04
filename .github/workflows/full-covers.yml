@@ -10,6 +10,9 @@ on:
         type: choice
         options: [casual, retro, training]
         default: casual
+      first_id:
+        type: string
+        default: '23227'
 permissions:
   contents: write
 concurrency:
@@ -34,6 +37,7 @@ jobs:
         env:
           APPLY: ${{ inputs.apply }}
           SCOPE: ${{ inputs.scope }}
+          FIRST_ID: ${{ inputs.first_id || '23227' }}
         run: python scripts/full_covers.py 2> full-covers-error.txt || true
       - name: Guardar
         run: |

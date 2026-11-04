@@ -40,7 +40,7 @@ manual = set(json.loads(Path('portadas.json').read_text())) if Path('portadas.js
 # Nunca se tocan las portadas que Bryan eligió a mano.
 SCOPE = os.environ.get('SCOPE', 'casual')
 if SCOPE == 'training':  # ropa de entrenamiento nueva (desde el id 23227)
-    todo = [p for p in items if p.get('version') == 'entrenamiento' and int(p['id']) >= 23227 and p.get('cover') and p.get('status') != 'hidden' and p['id'] not in manual]
+    todo = [p for p in items if p.get('version') == 'entrenamiento' and int(p['id']) >= int(os.environ.get('FIRST_ID', '23227')) and p.get('cover') and p.get('status') != 'hidden' and p['id'] not in manual]
 elif SCOPE == 'retro':  # camisetas retro nuevas (desde el id 22560)
     todo = [p for p in items if p.get('version') == 'retro' and int(p['id']) >= 22560 and p.get('cover') and p.get('status') != 'hidden' and p['id'] not in manual]
 else:
