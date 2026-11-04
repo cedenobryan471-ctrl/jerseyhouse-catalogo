@@ -1,0 +1,30 @@
+name: Cambiar portadas de cerca
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: catalog-update
+  cancel-in-progress: false
+jobs:
+  swap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow "transformers<5" torch --extra-index-url https://download.pytorch.org/whl/cpu
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: mkdir -p gallery-extra && gh release download gallery-photos --pattern gallery-extra.tar.gz --dir /tmp --clobber && tar -xzf /tmp/gallery-extra.tar.gz -C gallery-extra
+      - run: python scripts/cover_swap.py
+      - run: |
+          git config user.name catalog-bot; git config user.email catalog-bot@users.noreply.github.com
+          git add catalog.json images cover-swap-result.json
+          git diff --cached --quiet || (git commit -qm "Portadas de cerca cambiadas" && for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 20; done)
+          gh workflow run catalog-overrides.yml --ref main || true
+        env:
+          GH_TOKEN: ${{ github.token }}
