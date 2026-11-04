@@ -23,6 +23,10 @@ def compact(p):
 def main():
     items = json.loads(Path('catalog.json').read_text())
     Path('tienda.json').write_text(json.dumps([compact(p) for p in items], ensure_ascii=False, separators=(',', ':')))
+    # Para los clientes: sin los productos ocultos (más liviano y rápido). El panel de admin sigue usando tienda.json.
+    states = json.loads(Path('estado.json').read_text()) if Path('estado.json').exists() else {}
+    visible = [p for p in items if states.get(p['id'], p.get('status')) != 'hidden']
+    Path('tienda-visible.json').write_text(json.dumps([compact(p) for p in visible], ensure_ascii=False, separators=(',', ':')))
 
 if __name__ == '__main__':
     main()
