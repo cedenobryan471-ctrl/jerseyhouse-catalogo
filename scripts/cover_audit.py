@@ -36,6 +36,8 @@ todo = [p for p in items if p.get('cover') and states.get(p['id'], p.get('status
         and p.get('categorySlug') not in ('calzado', 'accesorios') and p['id'] not in manual]
 cover_sc = dict(zip([p['id'] for p in todo], scores([Path('images') / p['cover'] for p in todo])))
 swapped = weak = 0
+APPLY = os.environ.get('APPLY') == 'true'; MIN_NEW = float(os.environ.get('MIN_NEW', '0.8')); MAX_OLD = float(os.environ.get('MAX_OLD', '0.25'))
+log = {}
 for p in todo:
     p.pop('weak', None)
     sc = cover_sc[p['id']]
@@ -43,7 +45,9 @@ for p in todo:
     gal = [k for k in p.get('gallery') or [] if (extras / k).exists()]
     gs = scores([extras / k for k in gal]) if gal else []
     best = max(range(len(gs)), key=lambda i: gs[i]) if gs else None
-    if best is not None and gs[best] >= 0.5 and gs[best] - sc > 0.25:
+    log[p['id']] = {'cover': round(sc, 3), 'best': gal[best] if best is not None else None, 'best_sc': round(gs[best], 3) if best is not None else None}
+    if not APPLY: continue
+    if best is not None and sc < MAX_OLD and gs[best] >= MIN_NEW:
         new = gal[best]
         with Image.open(extras / new) as im:
             im = im.convert('RGB'); im.thumbnail((500, 500)); im.save(Path('images') / p['cover'], 'WEBP', quality=75)
@@ -51,5 +55,6 @@ for p in todo:
     elif sc < 0.3:
         p['weak'] = True; weak += 1
 Path('catalog.json').write_text(json.dumps(items, ensure_ascii=False, separators=(',', ':')))
+Path('cover-audit-scores.json').write_text(json.dumps(log))
 Path('cover-audit.json').write_text(json.dumps({'checked': len(todo), 'swapped': swapped, 'weak': weak}))
 print(swapped, weak)

@@ -1,6 +1,10 @@
 name: Revisar todas las portadas
 on:
   workflow_dispatch:
+    inputs:
+      apply:
+        type: boolean
+        default: false
   schedule:
     - cron: '17 8 * * 0'
 permissions:
@@ -22,11 +26,13 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
         run: mkdir -p gallery-extra && gh release download gallery-photos --pattern gallery-extra.tar.gz --dir /tmp --clobber && tar -xzf /tmp/gallery-extra.tar.gz -C gallery-extra
-      - run: python scripts/cover_audit.py
+      - env:
+          APPLY: ${{ github.event_name == 'schedule' || inputs.apply }}
+        run: python scripts/cover_audit.py
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name catalog-bot; git config user.email catalog-bot@users.noreply.github.com
-          git add catalog.json images cover-audit.json
+          git add catalog.json images cover-audit.json cover-audit-scores.json
           git diff --cached --quiet || (git commit -qm "Revisión semanal de portadas" && for i in 1 2 3 4; do git pull --rebase -q && git push -q && break; git rebase --abort 2>/dev/null; sleep 30; done)
           gh workflow run catalog-overrides.yml --ref main || true
