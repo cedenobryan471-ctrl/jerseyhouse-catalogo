@@ -1,13 +1,13 @@
 {
-  "products": 19770,
+  "products": 26524,
   "sources": [
     {
       "source": 1,
       "group": "catalog",
       "added": 0,
-      "duplicates": 1,
-      "unrecognized": 5,
-      "photo_rejected": 2,
+      "duplicates": 6,
+      "unrecognized": 2,
+      "photo_rejected": 0,
       "read_errors": 144,
       "albums_checked": 8,
       "listing_pages_checked": 8,
@@ -69,8 +69,8 @@
       "source": 5,
       "group": "catalog",
       "added": 0,
-      "duplicates": 2,
-      "unrecognized": 6,
+      "duplicates": 0,
+      "unrecognized": 8,
       "photo_rejected": 0,
       "read_errors": 136,
       "albums_checked": 8,
@@ -79,7 +79,7 @@
       "error_types": {
         "fetch": 136
       },
-      "albums_discovered": 312
+      "albums_discovered": 311
     },
     {
       "source": 6,
@@ -95,7 +95,7 @@
       "error_types": {
         "fetch": 130
       },
-      "albums_discovered": 546
+      "albums_discovered": 547
     },
     {
       "source": 7,
@@ -115,53 +115,53 @@
     }
   ],
   "added": 0,
-  "footwear_products": 3265,
+  "footwear_products": 6050,
   "privacy": {
-    "removed": 7,
+    "removed": 12,
     "remaining": 0
   },
   "organization": {
     "moved_from_others": {},
     "review": 89,
     "sections_visible": {
-      "ropa-casual": 2210,
-      "selecciones": 2320,
-      "calzado": 3253,
+      "ropa-casual": 2225,
+      "selecciones": 3154,
+      "futbol": 10987,
+      "calzado": 2719,
       "accesorios": 37,
       "nhl": 59,
-      "futbol": 7913,
       "nfl": 206,
       "formula-1": 351,
       "nba": 1106
     },
     "categories_visible": {
-      "conjuntos": 847,
-      "chaquetas": 1307,
-      "shorts": 611,
+      "conjuntos": 4775,
+      "chaquetas": 1234,
+      "shorts": 613,
       "buzos": 486,
-      "calzado": 3253,
-      "camisetas": 10914,
+      "camisetas": 10980,
+      "calzado": 2719,
       "accesorios": 37
     },
     "sections_total": {
-      "ropa-casual": 2370,
-      "selecciones": 2665,
-      "calzado": 3265,
+      "ropa-casual": 2387,
+      "selecciones": 3506,
+      "futbol": 12668,
+      "calzado": 6050,
       "revision": 89,
       "accesorios": 38,
       "nhl": 71,
-      "futbol": 9557,
       "nfl": 223,
       "formula-1": 353,
       "nba": 1139
     },
     "categories_total": {
-      "conjuntos": 986,
-      "chaquetas": 1420,
-      "shorts": 651,
-      "buzos": 550,
-      "calzado": 3265,
-      "camisetas": 12771,
+      "conjuntos": 4917,
+      "chaquetas": 1349,
+      "shorts": 654,
+      "buzos": 551,
+      "camisetas": 12876,
+      "calzado": 6050,
       "faldas": 10,
       "accesorios": 38,
       "bolsos": 14,
@@ -170,16 +170,16 @@
     }
   },
   "examples": [
-    "Adidas 27 FG Predator Elite Tongue",
-    "Adidas 27 FG Predator Elite Tongue",
-    "Puma 8 Bota alta FG FUTURE ULTIMATE TF",
-    "Adidas 27 FG Predator Elite Tongue",
-    "Nike / GX III Phantom Elite TF",
-    "Nike / GX III Phantom Elite TF",
-    "Adidas 27 FG Predator Elite Tongue",
-    "Adidas 27 FG Predator Elite Tongue",
-    "2027 FG COPA PURE II+ BOOTS",
-    "Nike MD Air Zoom Mercurial Vapor XVI Elite IC"
+    "Nike Air Max 90",
+    "Balenciaga 2",
+    "Jordan 3 Air",
+    "Jordan 11",
+    "Jordan Air 1",
+    "Jordan Air 1",
+    "Yeezy",
+    "Jordan Air 1",
+    "Nike Air Max",
+    "New Balance 574"
   ],
   "photo_screening": {
     "screened": 0,
