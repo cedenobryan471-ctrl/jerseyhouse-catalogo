@@ -1,8 +1,14 @@
 {
- "added": 0,
- "by_category": {},
+ "added": 17,
+ "by_category": {
+  "chaquetas": 7,
+  "buzos": 3,
+  "pantalones": 4,
+  "gorras": 1,
+  "conjuntos": 2
+ },
  "skipped": {},
- "albums": 486,
+ "albums": 2145,
  "remaining": 0,
  "status": "ok"
 }
