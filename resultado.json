@@ -1,12 +1,12 @@
 {
-  "products": 26524,
+  "products": 26555,
   "sources": [
     {
       "source": 1,
       "group": "catalog",
       "added": 0,
-      "duplicates": 6,
-      "unrecognized": 2,
+      "duplicates": 4,
+      "unrecognized": 4,
       "photo_rejected": 0,
       "read_errors": 144,
       "albums_checked": 8,
@@ -15,7 +15,7 @@
       "error_types": {
         "fetch": 144
       },
-      "albums_discovered": 531
+      "albums_discovered": 529
     },
     {
       "source": 2,
@@ -38,7 +38,7 @@
       "group": "catalog",
       "added": 0,
       "duplicates": 0,
-      "unrecognized": 7,
+      "unrecognized": 0,
       "photo_rejected": 0,
       "read_errors": 127,
       "albums_checked": 8,
@@ -79,7 +79,7 @@
       "error_types": {
         "fetch": 136
       },
-      "albums_discovered": 311
+      "albums_discovered": 312
     },
     {
       "source": 6,
@@ -115,71 +115,71 @@
     }
   ],
   "added": 0,
-  "footwear_products": 6050,
+  "footwear_products": 6064,
   "privacy": {
-    "removed": 12,
+    "removed": 10,
     "remaining": 0
   },
   "organization": {
     "moved_from_others": {},
     "review": 89,
     "sections_visible": {
-      "ropa-casual": 2225,
+      "ropa-casual": 2241,
+      "accesorios": 38,
+      "calzado": 2733,
       "selecciones": 3154,
       "futbol": 10987,
-      "calzado": 2719,
-      "accesorios": 37,
       "nhl": 59,
       "nfl": 206,
       "formula-1": 351,
       "nba": 1106
     },
     "categories_visible": {
-      "conjuntos": 4775,
-      "chaquetas": 1234,
-      "shorts": 613,
-      "buzos": 486,
-      "camisetas": 10980,
-      "calzado": 2719,
-      "accesorios": 37
+      "conjuntos": 4777,
+      "accesorios": 38,
+      "chaquetas": 1241,
+      "shorts": 617,
+      "buzos": 489,
+      "calzado": 2733,
+      "camisetas": 10980
     },
     "sections_total": {
-      "ropa-casual": 2387,
+      "ropa-casual": 2403,
+      "accesorios": 39,
+      "calzado": 6064,
       "selecciones": 3506,
       "futbol": 12668,
-      "calzado": 6050,
       "revision": 89,
-      "accesorios": 38,
       "nhl": 71,
       "nfl": 223,
       "formula-1": 353,
       "nba": 1139
     },
     "categories_total": {
-      "conjuntos": 4917,
-      "chaquetas": 1349,
-      "shorts": 654,
-      "buzos": 551,
+      "conjuntos": 4919,
+      "accesorios": 39,
+      "chaquetas": 1356,
+      "shorts": 658,
+      "buzos": 554,
+      "calzado": 6064,
       "camisetas": 12876,
-      "calzado": 6050,
       "faldas": 10,
-      "accesorios": 38,
       "bolsos": 14,
       "ropa-hombre": 24,
       "otros": 41
     }
   },
   "examples": [
-    "Nike Air Max 90",
-    "Balenciaga 2",
-    "Jordan 3 Air",
-    "Jordan 11",
-    "Jordan Air 1",
-    "Jordan Air 1",
-    "Yeezy",
-    "Jordan Air 1",
-    "Nike Air Max",
-    "New Balance 574"
+    "Asics Court FF 3 NOVAK",
+    "Asics Court FF 3 NOVAK",
+    "Asics Court FF 3 NOVAK",
+    "Asics Court FF 3 NOVAK",
+    "Asics Court FF 3 NOVAK",
+    "Nike Gato",
+    "Asics Court FF 3 NOVAK",
+    "Nike Gato",
+    "Nike Gato",
+    "Asics Court FF 3 NOVAK"
   ],
   "photo_screening": {
     "screened": 0,
