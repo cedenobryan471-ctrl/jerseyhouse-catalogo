@@ -2,22 +2,20 @@
  "sources": [
   {
    "source": 1,
-   "added": 14,
-   "skipped": {
-    "duplicate_photo": 11
-   },
+   "added": 0,
+   "skipped": {},
    "pages": [
     495,
     495
    ],
-   "pending_before": 25,
-   "kind": "album",
+   "pending_before": 0,
+   "kind": null,
    "pending_after": 0,
    "status": "ok"
   }
  ],
- "added": 14,
+ "added": 0,
  "remaining": 0,
  "footwear_products": 6064,
- "size_bytes": 668152560
+ "size_bytes": 668410010
 }
