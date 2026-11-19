@@ -2,13 +2,12 @@
  "added": 120,
  "skipped": {},
  "by_category": {
-  "pantalones": 16,
-  "conjuntos": 39,
-  "shorts": 10,
-  "chaquetas": 24,
-  "camisetas": 31
+  "camisetas": 60,
+  "pantalones": 47,
+  "conjuntos": 2,
+  "shorts": 11
  },
- "remaining": 183,
+ "remaining": 63,
  "albums": [
   543
  ],
