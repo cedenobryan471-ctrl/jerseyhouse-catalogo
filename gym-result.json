@@ -1,0 +1,18 @@
+{
+ "added": 19,
+ "skipped": {
+  "no_reconocido": 1
+ },
+ "by_category": {
+  "camisetas": 7,
+  "shorts": 5,
+  "pantalones": 4,
+  "chaquetas": 1,
+  "conjuntos": 2
+ },
+ "remaining": 0,
+ "albums": [
+  543
+ ],
+ "status": "ok"
+}
