@@ -1,16 +1,15 @@
 {
- "added": 19,
+ "added": 119,
  "skipped": {
   "no_reconocido": 1
  },
  "by_category": {
-  "camisetas": 7,
-  "shorts": 5,
-  "pantalones": 4,
-  "chaquetas": 1,
-  "conjuntos": 2
+  "camisetas": 105,
+  "conjuntos": 3,
+  "buzos": 1,
+  "shorts": 10
  },
- "remaining": 0,
+ "remaining": 423,
  "albums": [
   543
  ],
