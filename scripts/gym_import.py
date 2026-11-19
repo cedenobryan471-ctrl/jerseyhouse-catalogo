@@ -32,7 +32,7 @@ SIZE_SCALE = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL']
 
 
 def sizes_of(raw):
-    m = re.search(r'\b(XS|S|M|L|XL|[2-4]XL)\s*[-~]\s*(S|M|L|XL|[2-4]XL)\b', raw, re.I)
+    m = re.search(r'(?<![A-Za-z0-9])(XS|S|M|L|XL|[2-4]XL)\s*[-~～]\s*([2-4]XL|XL|S|M|L)(?![A-Za-z])', raw, re.I)
     if m:
         a, b = SIZE_SCALE.index(m.group(1).upper()), SIZE_SCALE.index(m.group(2).upper())
         if a <= b: return SIZE_SCALE[a:b + 1]

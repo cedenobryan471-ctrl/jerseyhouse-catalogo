@@ -8,7 +8,7 @@ on:
         default: false
       scope:
         type: choice
-        options: [casual, retro, training]
+        options: [casual, retro, training, gym]
         default: casual
       first_id:
         type: string
