@@ -1,5 +1,317 @@
 [
   {
+    "id": "27046",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27045",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27044",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27043",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27042",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27041",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27040",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27039",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27038",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27037",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27036",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27035",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27034",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27033",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27032",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27031",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27030",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27029",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27028",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27027",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27026",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27025",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27024",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27023",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27022",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27021",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27020",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27019",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27018",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27017",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27016",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27015",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27014",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27013",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27012",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27011",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27010",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27009",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27008",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "27007",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26819",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26818",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26816",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26815",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26814",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26813",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26812",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26811",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26810",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26809",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26808",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26807",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26806",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26805",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26804",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26803",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26802",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26801",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26800",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26799",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26798",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26797",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26796",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26795",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26794",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26793",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26792",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26791",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26790",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26789",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26788",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26787",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26786",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26785",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26784",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26783",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26782",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
+    "id": "26781",
+    "reason": "Categoría o identidad no confirmada"
+  },
+  {
     "id": "19545",
     "reason": "Categoría o identidad no confirmada"
   },
