@@ -1,8 +1,14 @@
 {
- "added": 0,
- "by_category": {},
- "skipped": {},
- "albums": 486,
+ "added": 4,
+ "by_category": {
+  "buzos": 1,
+  "pantalones": 1,
+  "chaquetas": 2
+ },
+ "skipped": {
+  "fotos_con_texto": 1
+ },
+ "albums": 2105,
  "remaining": 0,
  "status": "ok"
 }
